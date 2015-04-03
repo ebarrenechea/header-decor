@@ -29,9 +29,9 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
 
     private Map<Long, RecyclerView.ViewHolder> mHeaderCache;
 
-    private Adapter mAdapter;
+    private StickyHeaderAdapter mAdapter;
 
-    public StickyHeaderDecoration(StickyHeaderDecoration.Adapter adapter) {
+    public StickyHeaderDecoration(StickyHeaderAdapter adapter) {
         mAdapter = adapter;
         mHeaderCache = new HashMap<>();
     }
@@ -122,13 +122,4 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         return top;
     }
 
-    public interface Adapter<T extends RecyclerView.ViewHolder> {
-        public long getHeaderId(int position);
-
-        public T onCreateHeaderViewHolder(ViewGroup parent);
-
-        public void onBindHeaderViewHolder(T viewholder, int position);
-
-        public int getItemCount();
-    }
 }

@@ -24,7 +24,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> implements
-        StickyHeaderDecoration.Adapter<TestAdapter.HeaderHolder> {
+        StickyHeaderAdapter<TestAdapter.HeaderHolder> {
 
     private LayoutInflater mInflater;
 
