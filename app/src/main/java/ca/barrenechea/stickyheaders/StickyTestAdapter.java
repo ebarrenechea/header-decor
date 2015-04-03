@@ -23,12 +23,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> implements
-        StickyHeaderAdapter<TestAdapter.HeaderHolder> {
+public class StickyTestAdapter extends RecyclerView.Adapter<StickyTestAdapter.ViewHolder> implements
+        StickyHeaderAdapter<StickyTestAdapter.HeaderHolder> {
 
     private LayoutInflater mInflater;
 
-    public TestAdapter(Context context) {
+    public StickyTestAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 

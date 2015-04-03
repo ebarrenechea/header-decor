@@ -16,8 +16,8 @@
 
 package ca.barrenechea.stickyheaders;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -31,7 +31,7 @@ public class MainActivity extends ActionBarActivity {
 
         final RecyclerView list = (RecyclerView) this.findViewById(R.id.list);
 
-        TestAdapter adapter = new TestAdapter(this);
+        StickyTestAdapter adapter = new StickyTestAdapter(this);
 
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(this));
