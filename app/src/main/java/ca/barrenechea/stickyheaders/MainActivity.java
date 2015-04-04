@@ -32,10 +32,13 @@ public class MainActivity extends ActionBarActivity {
         final RecyclerView list = (RecyclerView) this.findViewById(R.id.list);
 
         StickyTestAdapter adapter = new StickyTestAdapter(this);
+//        DoubleHeaderTestAdapter adapter = new DoubleHeaderTestAdapter(this);
 
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(this));
-        list.addItemDecoration(new StickyHeaderDecoration(adapter));
+        list.addItemDecoration(new DividerDecoration(this), 0);
+        list.addItemDecoration(new StickyHeaderDecoration(adapter), 1);
+//        list.addItemDecoration(new DoubleHeaderDecoration(adapter));
         list.setAdapter(adapter);
     }
 }
