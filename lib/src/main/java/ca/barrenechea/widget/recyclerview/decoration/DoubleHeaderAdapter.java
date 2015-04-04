@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ca.barrenechea.stickyheaders;
+package ca.barrenechea.widget.recyclerview.decoration;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;

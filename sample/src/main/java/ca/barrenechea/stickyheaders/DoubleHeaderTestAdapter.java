@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderAdapter;
+
 public class DoubleHeaderTestAdapter extends RecyclerView.Adapter<DoubleHeaderTestAdapter.ViewHolder> implements
         DoubleHeaderAdapter<DoubleHeaderTestAdapter.TimelineHolder, DoubleHeaderTestAdapter.DateHeaderHolder> {
 

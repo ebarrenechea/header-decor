@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package ca.barrenechea.stickyheaders;
+package ca.barrenechea.widget.recyclerview.decoration;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.ViewGroup;
+import android.app.Application;
+import android.test.ApplicationTestCase;
 
-public interface StickyHeaderAdapter<T extends RecyclerView.ViewHolder> {
-    long getHeaderId(int position);
-
-    T onCreateHeaderViewHolder(ViewGroup parent);
-
-    void onBindHeaderViewHolder(T viewholder, int position);
-
-    int getItemCount();
+/**
+ * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
+ */
+public class ApplicationTest extends ApplicationTestCase<Application> {
+    public ApplicationTest() {
+        super(Application.class);
+    }
 }
