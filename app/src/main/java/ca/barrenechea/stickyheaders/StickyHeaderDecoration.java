@@ -29,9 +29,9 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
 
     private Map<Long, RecyclerView.ViewHolder> mHeaderCache;
 
-    private Adapter mAdapter;
+    private StickyHeaderAdapter mAdapter;
 
-    public StickyHeaderDecoration(StickyHeaderDecoration.Adapter adapter) {
+    public StickyHeaderDecoration(StickyHeaderAdapter adapter) {
         mAdapter = adapter;
         mHeaderCache = new HashMap<>();
     }
@@ -91,16 +91,16 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         final int count = parent.getChildCount();
 
-        for (int i = 0; i < count; i++) {
-            final View child = parent.getChildAt(i);
+        for (int layoutPos = 0; layoutPos < count; layoutPos++) {
+            final View child = parent.getChildAt(layoutPos);
 
-            final int adapterPosition = parent.getChildAdapterPosition(child);
+            final int adapterPos = parent.getChildAdapterPosition(child);
 
-            if (i == 0 || hasHeader(adapterPosition)) {
-                View header = getHeader(parent, adapterPosition).itemView;
+            if (layoutPos == 0 || hasHeader(adapterPos)) {
+                View header = getHeader(parent, adapterPos).itemView;
                 c.save();
                 final int left = child.getLeft();
-                final int top = getHeaderTop(child, header, adapterPosition);
+                final int top = getHeaderTop(parent, child, header, adapterPos, layoutPos);
                 c.translate(left, top);
                 header.draw(c);
                 c.restore();
@@ -108,27 +108,29 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    private int getHeaderTop(View child, View header, int position) {
+    private int getHeaderTop(RecyclerView parent, View child, View header, int adapterPos, int layoutPos) {
         int top = child.getTop() - header.getHeight();
-        if (position != mAdapter.getItemCount() - 1) {
-            if (!hasHeader(position + 1)) {
-                top = Math.max(0, top);
-            } else {
-                top = child.getTop() + (child.getHeight() - header.getHeight());
-                top = Math.min(0, top);
+        if (layoutPos == 0) {
+            final int count = parent.getChildCount();
+            final long currentId = mAdapter.getHeaderId(adapterPos);
+            // find next view with header and compute the offscreen push if needed
+            for (int i = 1; i < count; i++) {
+                long nextId = mAdapter.getHeaderId(adapterPos + i);
+                if (nextId != currentId) {
+                    final View next = parent.getChildAt(i);
+                    final int offset = next.getTop() - (header.getHeight() + getHeader(parent, i).itemView.getHeight());
+                    if (offset < 0) {
+                        return offset;
+                    } else {
+                        break;
+                    }
+                }
             }
+
+            top = Math.max(0, top);
         }
 
         return top;
     }
 
-    public interface Adapter<T extends RecyclerView.ViewHolder> {
-        public long getHeaderId(int position);
-
-        public T onCreateHeaderViewHolder(ViewGroup parent);
-
-        public void onBindHeaderViewHolder(T viewholder, int position);
-
-        public int getItemCount();
-    }
 }
