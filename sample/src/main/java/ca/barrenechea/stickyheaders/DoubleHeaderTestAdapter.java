@@ -76,12 +76,12 @@ public class DoubleHeaderTestAdapter extends RecyclerView.Adapter<DoubleHeaderTe
 
     @Override
     public void onBindHeaderHolder(TimelineHolder viewholder, int position) {
-        viewholder.timeline.setText("Timeline " + getHeaderId(position));
+        viewholder.timeline.setText("Header " + getHeaderId(position));
     }
 
     @Override
     public void onBindSubHeaderHolder(DateHeaderHolder viewholder, int position) {
-        viewholder.date.setText("Date " + getSubHeaderId(position));
+        viewholder.date.setText("Sub-header " + getSubHeaderId(position));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
