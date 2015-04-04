@@ -17,13 +17,15 @@
 
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="64dp"
     android:background="#55AA33"
     android:gravity="center_vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-    android:textColor="#FFF">
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:textColor="#FFF"
+    tools:text="Sample text">
 
 </TextView>
