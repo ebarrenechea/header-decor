@@ -26,7 +26,7 @@ import android.widget.TextView;
 import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderAdapter;
 
 public class DoubleHeaderTestAdapter extends RecyclerView.Adapter<DoubleHeaderTestAdapter.ViewHolder> implements
-        DoubleHeaderAdapter<DoubleHeaderTestAdapter.TimelineHolder, DoubleHeaderTestAdapter.DateHeaderHolder> {
+        DoubleHeaderAdapter<DoubleHeaderTestAdapter.HeaderHolder, DoubleHeaderTestAdapter.SubHeaderHolder> {
 
     private LayoutInflater mInflater;
 
@@ -63,24 +63,24 @@ public class DoubleHeaderTestAdapter extends RecyclerView.Adapter<DoubleHeaderTe
     }
 
     @Override
-    public TimelineHolder onCreateHeaderHolder(ViewGroup parent) {
+    public HeaderHolder onCreateHeaderHolder(ViewGroup parent) {
         final View view = mInflater.inflate(R.layout.super_header_test, parent, false);
-        return new TimelineHolder(view);
+        return new HeaderHolder(view);
     }
 
     @Override
-    public DateHeaderHolder onCreateSubHeaderHolder(ViewGroup parent) {
+    public SubHeaderHolder onCreateSubHeaderHolder(ViewGroup parent) {
         final View view = mInflater.inflate(R.layout.header_test, parent, false);
-        return new DateHeaderHolder(view);
+        return new SubHeaderHolder(view);
     }
 
     @Override
-    public void onBindHeaderHolder(TimelineHolder viewholder, int position) {
+    public void onBindHeaderHolder(HeaderHolder viewholder, int position) {
         viewholder.timeline.setText("Header " + getHeaderId(position));
     }
 
     @Override
-    public void onBindSubHeaderHolder(DateHeaderHolder viewholder, int position) {
+    public void onBindSubHeaderHolder(SubHeaderHolder viewholder, int position) {
         viewholder.date.setText("Sub-header " + getSubHeaderId(position));
     }
 
@@ -94,20 +94,20 @@ public class DoubleHeaderTestAdapter extends RecyclerView.Adapter<DoubleHeaderTe
         }
     }
 
-    static class TimelineHolder extends RecyclerView.ViewHolder {
+    static class HeaderHolder extends RecyclerView.ViewHolder {
         public TextView timeline;
 
-        public TimelineHolder(View itemView) {
+        public HeaderHolder(View itemView) {
             super(itemView);
 
             timeline = (TextView) itemView;
         }
     }
 
-    static class DateHeaderHolder extends RecyclerView.ViewHolder {
+    static class SubHeaderHolder extends RecyclerView.ViewHolder {
         public TextView date;
 
-        public DateHeaderHolder(View itemView) {
+        public SubHeaderHolder(View itemView) {
             super(itemView);
 
             date = (TextView) itemView;
