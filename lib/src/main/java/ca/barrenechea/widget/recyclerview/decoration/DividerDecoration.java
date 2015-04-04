@@ -25,6 +25,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 
+/**
+ * A simple and borderline useless divider decoration. Used mostly for testing and debugging purposes.
+ * It will always draw a 1px thick black divider.
+ */
 public class DividerDecoration extends RecyclerView.ItemDecoration {
 
     private int mHeight;
@@ -36,6 +40,9 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
         mPaint.setColor(Color.BLACK);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         int count = parent.getChildCount();
@@ -53,6 +60,9 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         outRect.set(0, 0, 0, mHeight);

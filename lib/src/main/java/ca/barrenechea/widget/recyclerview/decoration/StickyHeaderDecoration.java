@@ -25,17 +25,26 @@ import android.view.ViewGroup;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A sticky header decoration for android's RecyclerView.
+ */
 public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
 
     private Map<Long, RecyclerView.ViewHolder> mHeaderCache;
 
     private StickyHeaderAdapter mAdapter;
 
+    /**
+     * @param adapter the sticky header adapter to use
+     */
     public StickyHeaderDecoration(StickyHeaderAdapter adapter) {
         mAdapter = adapter;
         mHeaderCache = new HashMap<>();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view);
@@ -87,6 +96,9 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         final int count = parent.getChildCount();
