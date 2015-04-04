@@ -25,12 +25,18 @@ import android.view.ViewGroup;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A double sticky header decoration for android's RecyclerView.
+ */
 public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
 
     private DoubleHeaderAdapter mAdapter;
     private Map<Long, RecyclerView.ViewHolder> mSubHeaderCache;
     private Map<Long, RecyclerView.ViewHolder> mHeaderCache;
 
+    /**
+     * @param adapter the double header adapter to use
+     */
     public DoubleHeaderDecoration(DoubleHeaderAdapter adapter) {
         mAdapter = adapter;
 
@@ -105,14 +111,9 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         return mAdapter.getHeaderId(position) != mAdapter.getHeaderId(previous);
     }
 
-    private boolean isLastForHeader(int position) {
-        return position == mAdapter.getItemCount() - 1 || mAdapter.getHeaderId(position + 1) != mAdapter.getHeaderId(position);
-    }
-
-    private boolean isLastForSubHeader(int position) {
-        return position == mAdapter.getItemCount() - 1 || mAdapter.getSubHeaderId(position + 1) != mAdapter.getSubHeaderId(position);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view);
@@ -132,6 +133,9 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         outRect.set(0, headerHeight, 0, 0);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         final int count = parent.getChildCount();
