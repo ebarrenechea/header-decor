@@ -22,10 +22,10 @@ android {
 
     defaultConfig {
         applicationId "ca.barrenechea.stickyheaders"
-        minSdkVersion 17
+        minSdkVersion 15
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode Integer.parseInt(project.VERSION_CODE)
+        versionName project.VERSION_NAME
     }
     buildTypes {
         release {
