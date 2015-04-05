@@ -15,16 +15,17 @@
  */
 
 apply plugin: 'com.android.library'
+apply plugin: 'bintray-release'
 
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 15
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode Integer.parseInt(project.VERSION_CODE)
+        versionName project.VERSION_NAME
     }
     buildTypes {
         release {
@@ -36,4 +37,33 @@ android {
 
 dependencies {
     compile 'com.android.support:recyclerview-v7:22.0.0'
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    pkg {
+        labels = ['android', 'recyclerview', 'item decoration', 'sticky header']
+        version {
+            gpg {
+                sign = true
+                passphrase = properties.getProperty("signing.password")
+            }
+        }
+    }
+}
+
+
+publish {
+    dryRun = false
+    groupId = project.GROUP
+    artifactId = 'header-decor'
+    version = project.VERSION_NAME
+    website = 'https://github.com/edubarr/header-decor'
+    issueTracker = "${website}/issues"
+    repository = "${website}.git"
+    description = 'Sticky recycler view header decorations for android.'
+    bintrayUser = properties.getProperty("bintray.user")
+    bintrayKey = properties.getProperty("bintray.apikey")
 }
