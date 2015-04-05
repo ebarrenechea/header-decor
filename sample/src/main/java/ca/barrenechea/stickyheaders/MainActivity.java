@@ -16,33 +16,57 @@
 
 package ca.barrenechea.stickyheaders;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 
-import ca.barrenechea.widget.recyclerview.decoration.DividerDecoration;
-import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderDecoration;
+import ca.barrenechea.stickyheaders.ui.DoubleHeaderFragment;
+import ca.barrenechea.stickyheaders.ui.StickyHeaderFragment;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final RecyclerView list = (RecyclerView) this.findViewById(R.id.list);
+        HeaderPagerAdapter adapter = new HeaderPagerAdapter(this.getSupportFragmentManager());
 
-//        StickyTestAdapter adapter = new StickyTestAdapter(this);
-        DoubleHeaderTestAdapter adapter = new DoubleHeaderTestAdapter(this);
+        ViewPager pager = (ViewPager) this.findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+    }
 
-        list.setHasFixedSize(true);
-        list.setLayoutManager(new LinearLayoutManager(this));
-        list.addItemDecoration(new DividerDecoration(this));
-        list.addItemDecoration(new DoubleHeaderDecoration(adapter), 1);
-//        list.addItemDecoration(new StickyHeaderDecoration(adapter), 1);
+    class HeaderPagerAdapter extends FragmentPagerAdapter {
 
-        list.setAdapter(adapter);
+        public HeaderPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0) {
+                return new StickyHeaderFragment();
+            } else {
+                return new DoubleHeaderFragment();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position == 0) {
+                return "Sticky Header";
+            } else {
+                return "Double Header";
+            }
+        }
     }
 }
