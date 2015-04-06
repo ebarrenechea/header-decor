@@ -3,7 +3,7 @@ A couple of sticky header decorations for android's recycler view.
 
 A Sample app is available on Google Play:
 
-[![Header decor sample app image](http://i.imgur.com/xsm1I0F.gif)]
+![Header decor sample app image](http://i.imgur.com/xsm1I0F.gif)
 
 [![Google Play](https://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=ca.barrenechea.stickyheaders)
 
