@@ -7,6 +7,26 @@ A Sample app is available on Google Play:
 
 [![Google Play](https://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=ca.barrenechea.stickyheaders)
 
+Usage
+---------------
+This library is available in `aar` format.
+
+If you are using gradle:
+```groovy
+dependencies {
+    compile 'ca.barrenechea.header-decor:header-decor:0.2.1'
+}
+```
+
+If you are using maven:
+```xml
+<dependency>
+    <groupId>ca.barrenechea.header-decor</groupId>
+    <artifactId>header-decor</artifactId>
+    <version>0.2.1</version>
+</dependency>
+```
+
 License
 -------
 
