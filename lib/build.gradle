@@ -15,7 +15,7 @@
  */
 
 apply plugin: 'com.android.library'
-apply plugin: 'bintray-release'
+//apply plugin: 'bintray-release'
 
 android {
     compileSdkVersion 22
@@ -39,31 +39,4 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.0.0'
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-bintray {
-    pkg {
-        labels = ['android', 'recyclerview', 'item decoration', 'sticky header']
-        version {
-            gpg {
-                sign = true
-                passphrase = properties.getProperty("signing.password")
-            }
-        }
-    }
-}
-
-
-publish {
-    dryRun = false
-    groupId = project.GROUP
-    artifactId = 'header-decor'
-    version = project.VERSION_NAME
-    website = 'https://github.com/edubarr/header-decor'
-    issueTracker = "${website}/issues"
-    repository = "${website}.git"
-    description = 'Sticky recycler view header decorations for android.'
-    bintrayUser = properties.getProperty("bintray.user")
-    bintrayKey = properties.getProperty("bintray.apikey")
-}
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

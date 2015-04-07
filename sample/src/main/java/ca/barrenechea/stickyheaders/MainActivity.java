@@ -16,12 +16,16 @@
 
 package ca.barrenechea.stickyheaders;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import ca.barrenechea.stickyheaders.ui.DoubleHeaderFragment;
 import ca.barrenechea.stickyheaders.ui.StickyHeaderFragment;
@@ -38,6 +42,23 @@ public class MainActivity extends FragmentActivity {
 
         ViewPager pager = (ViewPager) this.findViewById(R.id.pager);
         pager.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_about) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/edubarr/header-decor"));
+            this.startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     class HeaderPagerAdapter extends FragmentPagerAdapter {
