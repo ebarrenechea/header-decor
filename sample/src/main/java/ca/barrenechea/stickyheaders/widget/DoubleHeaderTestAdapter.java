@@ -47,7 +47,6 @@ public class DoubleHeaderTestAdapter extends RecyclerView.Adapter<DoubleHeaderTe
         viewHolder.item.setText("Item " + i);
     }
 
-
     @Override
     public int getItemCount() {
         return 50;
