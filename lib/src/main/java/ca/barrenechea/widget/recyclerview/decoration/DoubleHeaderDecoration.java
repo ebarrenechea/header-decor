@@ -44,6 +44,19 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         mHeaderCache = new HashMap<>();
     }
 
+    public void clearDoubleHeaderCache() {
+        clearSubHeaderCache();
+        clearHeaderCache();
+    }
+
+    public void clearSubHeaderCache() {
+        mSubHeaderCache.clear();
+    }
+
+    public void clearHeaderCache() {
+        mHeaderCache.clear();
+    }
+
     private RecyclerView.ViewHolder getSubHeader(RecyclerView parent, int position) {
         final long key = mAdapter.getSubHeaderId(position);
 

@@ -17,17 +17,34 @@
 package ca.barrenechea.stickyheaders.ui;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
+import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.stickyheaders.widget.StickyTestAdapter;
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 
 public class StickyHeaderFragment extends BaseDecorationFragment {
 
+    private StickyHeaderDecoration decor;
+
     @Override
     protected void setAdapterAndDecor(RecyclerView list) {
         final StickyTestAdapter adapter = new StickyTestAdapter(this.getActivity());
+        decor = new StickyHeaderDecoration(adapter);
+        setHasOptionsMenu(true);
 
         list.setAdapter(adapter);
-        list.addItemDecoration(new StickyHeaderDecoration(adapter), 1);
+        list.addItemDecoration(decor, 1);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_clear_cache) {
+            decor.clearHeaderCache();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }
