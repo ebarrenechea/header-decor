@@ -17,17 +17,33 @@
 package ca.barrenechea.stickyheaders.ui;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
+import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.stickyheaders.widget.DoubleHeaderTestAdapter;
 import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderDecoration;
 
 public class DoubleHeaderFragment extends BaseDecorationFragment {
 
+    private DoubleHeaderDecoration decor;
+
     @Override
     protected void setAdapterAndDecor(RecyclerView list) {
         final DoubleHeaderTestAdapter adapter = new DoubleHeaderTestAdapter(this.getActivity());
+        decor = new DoubleHeaderDecoration(adapter);
 
         list.setAdapter(adapter);
-        list.addItemDecoration(new DoubleHeaderDecoration(adapter), 1);
+        list.addItemDecoration(decor, 1);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_clear_cache) {
+            decor.clearDoubleHeaderCache();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }
