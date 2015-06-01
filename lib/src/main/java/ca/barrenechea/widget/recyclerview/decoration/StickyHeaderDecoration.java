@@ -58,6 +58,10 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         outRect.set(0, headerHeight, 0, 0);
     }
 
+    public void clearHeaderCache() {
+        mHeaderCache.clear();
+    }
+
     private boolean hasHeader(int position) {
         if (position == 0) {
             return true;
