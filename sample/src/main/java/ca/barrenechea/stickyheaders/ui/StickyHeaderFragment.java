@@ -31,6 +31,7 @@ public class StickyHeaderFragment extends BaseDecorationFragment {
     protected void setAdapterAndDecor(RecyclerView list) {
         final StickyTestAdapter adapter = new StickyTestAdapter(this.getActivity());
         decor = new StickyHeaderDecoration(adapter);
+        setHasOptionsMenu(true);
 
         list.setAdapter(adapter);
         list.addItemDecoration(decor, 1);

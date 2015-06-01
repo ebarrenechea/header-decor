@@ -31,6 +31,7 @@ public class DoubleHeaderFragment extends BaseDecorationFragment {
     protected void setAdapterAndDecor(RecyclerView list) {
         final DoubleHeaderTestAdapter adapter = new DoubleHeaderTestAdapter(this.getActivity());
         decor = new DoubleHeaderDecoration(adapter);
+        setHasOptionsMenu(true);
 
         list.setAdapter(adapter);
         list.addItemDecoration(decor, 1);
