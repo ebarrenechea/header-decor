@@ -58,6 +58,10 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         outRect.set(0, headerHeight, 0, 0);
     }
 
+    /**
+     * Clears the header view cache. Headers will be recreated and
+     * rebound on list scroll after this method has been called.
+     */
     public void clearHeaderCache() {
         mHeaderCache.clear();
     }

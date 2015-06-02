@@ -44,15 +44,27 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         mHeaderCache = new HashMap<>();
     }
 
+    /**
+     * Clears both the header and subheader view cache. Headers and subheaders will be recreated and
+     * rebound on list scroll after this method has been called.
+     */
     public void clearDoubleHeaderCache() {
         clearSubHeaderCache();
         clearHeaderCache();
     }
 
+    /**
+     * Clears the subheader view cache. Subheaders will be recreated and
+     * rebound on list scroll after this method has been called.
+     */
     public void clearSubHeaderCache() {
         mSubHeaderCache.clear();
     }
 
+    /**
+     * Clears the header view cache. Headers will be recreated and
+     * rebound on list scroll after this method has been called.
+     */
     public void clearHeaderCache() {
         mHeaderCache.clear();
     }
