@@ -14,7 +14,7 @@ This library is available in `aar` format.
 If you are using gradle:
 ```groovy
 dependencies {
-    compile 'ca.barrenechea.header-decor:header-decor:0.2.1'
+    compile 'ca.barrenechea.header-decor:header-decor:0.2.2'
 }
 ```
 
