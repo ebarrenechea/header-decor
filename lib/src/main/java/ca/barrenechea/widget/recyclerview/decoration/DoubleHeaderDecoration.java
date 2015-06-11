@@ -145,7 +145,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
 
         int headerHeight = 0;
 
-        if (hasSubHeader(position)) {
+        if (position != RecyclerView.NO_POSITION && hasSubHeader(position)) {
             if (hasHeader(position)) {
                 View header = getHeader(parent, position).itemView;
                 headerHeight += header.getHeight();
@@ -170,7 +170,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
 
             final int adapterPos = parent.getChildAdapterPosition(child);
 
-            if (layoutPos == 0 || hasSubHeader(adapterPos)) {
+            if (adapterPos != RecyclerView.NO_POSITION && (layoutPos == 0 || hasSubHeader(adapterPos))) {
                 int left, top;
                 final View header = getHeader(parent, adapterPos).itemView;
                 final View subHeader = getSubHeader(parent, adapterPos).itemView;
