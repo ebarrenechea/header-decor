@@ -135,8 +135,7 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
             final long currentId = mAdapter.getHeaderId(adapterPos);
             // find next view with header and compute the offscreen push if needed
             for (int i = 1; i < count; i++) {
-                int layoutPosHere = layoutPos + i;
-                int adapterPosHere = parent.getChildAdapterPosition(parent.getChildAt(layoutPosHere));
+                int adapterPosHere = parent.getChildAdapterPosition(parent.getChildAt(i));
                 if (adapterPosHere != RecyclerView.NO_POSITION) {
                     long nextId = mAdapter.getHeaderId(adapterPosHere);
                     if (nextId != currentId) {
