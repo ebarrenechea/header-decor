@@ -129,7 +129,7 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
     }
 
     private int getHeaderTop(RecyclerView parent, View child, View header, int adapterPos, int layoutPos) {
-        int top = child.getTop() - header.getHeight();
+        int top = getAnimatedTop(child) - header.getHeight();
         if (layoutPos == 0) {
             final int count = parent.getChildCount();
             final long currentId = mAdapter.getHeaderId(adapterPos);
@@ -140,7 +140,7 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
                     long nextId = mAdapter.getHeaderId(adapterPosHere);
                     if (nextId != currentId) {
                         final View next = parent.getChildAt(i);
-                        final int offset = next.getTop() - (header.getHeight() + getHeader(parent, i).itemView.getHeight());
+                        final int offset = getAnimatedTop(next) - (header.getHeight() + getHeader(parent, i).itemView.getHeight());
                         if (offset < 0) {
                             return offset;
                         } else {
@@ -156,4 +156,7 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         return top;
     }
 
+    private int getAnimatedTop(View child) {
+        return child.getTop() + (int)child.getTranslationY();
+    }
 }
