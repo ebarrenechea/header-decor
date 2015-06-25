@@ -67,4 +67,11 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         outRect.set(0, 0, 0, mHeight);
     }
+    
+    /**
+     * Set Color Divider
+     */
+    public void setColorDivider(int color) {
+        mPaint.setColor(color);
+    }
 }
