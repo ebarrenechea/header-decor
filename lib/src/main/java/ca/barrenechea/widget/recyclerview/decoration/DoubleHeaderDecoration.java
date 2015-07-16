@@ -19,8 +19,6 @@ package ca.barrenechea.widget.recyclerview.decoration;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -36,8 +34,6 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
     private DoubleHeaderAdapter mAdapter;
     private Map<Long, RecyclerView.ViewHolder> mSubHeaderCache;
     private Map<Long, RecyclerView.ViewHolder> mHeaderCache;
-    private String lastLog = "";
-    private String lastHeaderLog = "";
 
     /**
      * @param adapter the double header adapter to use
@@ -168,28 +164,8 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
      */
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        StringBuilder log = new StringBuilder();
-        for (int layoutPos = 0; layoutPos < parent.getChildCount(); layoutPos++) {
-            View child = parent.getChildAt(layoutPos);
-            int adapterPos = parent.getChildAdapterPosition(child);
-            boolean visible = getAnimatedTop(child) > (-child.getHeight()) && getAnimatedTop(child) < parent.getHeight();
-            log.append(
-                    ""
-                    + (visible ? "" : "(")
-                    + layoutPos + "=>"
-                    + (adapterPos == RecyclerView.NO_POSITION ? "X" : adapterPos)
-                    + (visible ? "" : ")")
-                    + " | ");
-        }
-        String newLog = log.toString();
-        if (!TextUtils.equals(newLog, lastLog)) {
-            Log.i(TAG, newLog);
-            lastLog = newLog;
-        }
-
         final int count = parent.getChildCount();
 
-        StringBuilder headerLog = new StringBuilder();
         boolean headerDrawn = false;
         for (int layoutPos = 0; layoutPos < count; layoutPos++) {
             final View child = parent.getChildAt(layoutPos);
@@ -197,8 +173,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
             final int adapterPos = parent.getChildAdapterPosition(child);
             if (visible && adapterPos != RecyclerView.NO_POSITION && (!headerDrawn || hasSubHeader(adapterPos))) {
                 int left, top;
-                RecyclerView.ViewHolder headerHolder = getHeader(parent, adapterPos);
-                final View header = headerHolder.itemView;
+                final View header = getHeader(parent, adapterPos).itemView;
                 final View subHeader = getSubHeader(parent, adapterPos).itemView;
 
                 c.save();
@@ -213,18 +188,12 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
                     left = child.getLeft();
                     top = getHeaderTop(parent, child, subHeader, header, adapterPos, layoutPos);
                     c.translate(left, top);
-                    headerLog.append("\"" + headerHolder + "\"@(" + left + ", " + top + ") | ");
                     header.draw(c);
                     c.restore();
                 }
 
                 headerDrawn = true;
             }
-        }
-        final String newHeaderLog = headerLog.toString();
-        if (!TextUtils.equals(newHeaderLog, lastHeaderLog)) {
-            Log.i(TAG, newHeaderLog);
-            lastHeaderLog = newHeaderLog;
         }
     }
 
@@ -299,7 +268,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         for (int otherLayoutPos = layoutPos - 1; otherLayoutPos >= 0; --otherLayoutPos) {
             final View otherChild = parent.getChildAt(otherLayoutPos);
             if (parent.getChildAdapterPosition(otherChild) != RecyclerView.NO_POSITION) {
-                boolean visible = getAnimatedTop(otherChild) > -otherChild.getHeight()/* && child.getTop() < parent.getHeight()*/;
+                boolean visible = getAnimatedTop(otherChild) > -otherChild.getHeight();
                 if (visible) {
                     isFirstValidChild = false;
                     break;
