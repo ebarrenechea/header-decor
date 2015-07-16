@@ -29,8 +29,6 @@ import java.util.Map;
  * A double sticky header decoration for android's RecyclerView.
  */
 public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
-    private static final String TAG = DoubleHeaderDecoration.class.getName();
-
     private DoubleHeaderAdapter mAdapter;
     private Map<Long, RecyclerView.ViewHolder> mSubHeaderCache;
     private Map<Long, RecyclerView.ViewHolder> mHeaderCache;
