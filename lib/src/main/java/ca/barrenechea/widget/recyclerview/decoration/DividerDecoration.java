@@ -33,11 +33,15 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
 
     private int mHeight;
     private Paint mPaint;
+    private int left;
+    private int right;
 
     public DividerDecoration(Context context) {
         mHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 1f, context.getResources().getDisplayMetrics());
         mPaint = new Paint();
-        mPaint.setColor(Color.BLACK);
+        mPaint.setColor(Color.GRAY);
+        left = 0;
+        right = 0;
     }
 
     /**
@@ -47,15 +51,22 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         int count = parent.getChildCount();
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 1; i < count; i++) {
             final View child = parent.getChildAt(i);
-            final int top = child.getTop();
+            final int top = child.getTop() - (mHeight/2);
             final int bottom = top + mHeight;
-            final int left = child.getLeft();
-            final int right = child.getRight();
+
+            if (left == 0) {
+                left = child.getLeft();
+            }
+
+            int _right = child.getRight();
+            if (right > 0) {
+                _right = _right  - right;
+            }
 
             c.save();
-            c.drawRect(left, top, right, bottom, mPaint);
+            c.drawRect(left, top, _right, bottom, mPaint);
             c.restore();
         }
     }
@@ -65,13 +76,21 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
      */
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        outRect.set(0, 0, 0, mHeight);
+        outRect.set(0, 0, 0, 0);
     }
-    
+
     /**
-     * Set Color Divider
+     * Set Style Divider
+     * @param color the divider color
+     * @param thick the divider thickness
+     * @param leftPadding the divider left padding
+     * @param rightPadding the divider margin padding
      */
-    public void setColorDivider(int color) {
+    public void setStyleDivider(int color, int thick, int leftPadding, int rightPadding) {
+        left = leftPadding;
+        right = rightPadding;
+        mHeight = thick;
         mPaint.setColor(color);
+
     }
 }
