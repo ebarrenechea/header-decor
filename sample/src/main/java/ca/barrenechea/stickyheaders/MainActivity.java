@@ -28,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ca.barrenechea.stickyheaders.ui.DoubleHeaderFragment;
+import ca.barrenechea.stickyheaders.ui.InlineStickyHeaderFragment;
 import ca.barrenechea.stickyheaders.ui.StickyHeaderFragment;
 
 
@@ -69,24 +70,40 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0) {
-                return new StickyHeaderFragment();
-            } else {
-                return new DoubleHeaderFragment();
+            switch (position) {
+                case 0:
+                    return new StickyHeaderFragment();
+
+                case 1:
+                    return new InlineStickyHeaderFragment();
+
+                case 2:
+                    return new DoubleHeaderFragment();
+
+                default:
+                    return null;
             }
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position == 0) {
-                return "Sticky Header";
-            } else {
-                return "Double Header";
+            switch (position) {
+                case 0:
+                    return "Sticky Header";
+
+                case 1:
+                    return "Sticky Header - Inline";
+
+                case 2:
+                    return "Double Header";
+
+                default:
+                    return null;
             }
         }
     }
