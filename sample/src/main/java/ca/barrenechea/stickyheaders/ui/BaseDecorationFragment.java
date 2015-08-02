@@ -46,9 +46,15 @@ public abstract class BaseDecorationFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        final DividerDecoration divider = new DividerDecoration.Builder(this.getActivity())
+                .setHeight(R.dimen.default_divider_height)
+                .setPadding(R.dimen.default_divider_padding)
+                .setColorResource(R.color.default_header_color)
+                .build();
+
         mList.setHasFixedSize(true);
         mList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        mList.addItemDecoration(new DividerDecoration(this.getActivity()));
+        mList.addItemDecoration(divider);
 
         setAdapterAndDecor(mList);
     }
