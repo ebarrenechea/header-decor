@@ -64,7 +64,7 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         int headerHeight = 0;
         if (position != RecyclerView.NO_POSITION && hasHeader(position)) {
             View header = getHeader(parent, position).itemView;
-            headerHeight = mRenderInline ? 0 : header.getHeight();
+            headerHeight = getHeaderHeightForLayout(header);
         }
 
         outRect.set(0, headerHeight, 0, 0);
@@ -141,7 +141,7 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
     }
 
     private int getHeaderTop(RecyclerView parent, View child, View header, int adapterPos, int layoutPos) {
-        int headerHeight = mRenderInline ? 0 : header.getHeight();
+        int headerHeight = getHeaderHeightForLayout(header);
         int top = ((int) child.getY()) - headerHeight;
         if (layoutPos == 0) {
             final int count = parent.getChildCount();
@@ -167,5 +167,9 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         }
 
         return top;
+    }
+
+    private int getHeaderHeightForLayout(View header) {
+        return mRenderInline ? 0 : header.getHeight();
     }
 }
