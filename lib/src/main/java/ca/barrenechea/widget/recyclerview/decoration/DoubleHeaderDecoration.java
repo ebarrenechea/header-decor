@@ -221,7 +221,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
                 if (!headerDrawn || hasHeader(adapterPos)) {
                     c.save();
                     left = child.getLeft();
-                    top = getHeaderTop(parent, child, subHeader, header, adapterPos, layoutPos);
+                    top = getHeaderTop(parent, child, header, subHeader, adapterPos, layoutPos);
                     c.translate(left, top);
                     header.setTranslationX(left);
                     header.setTranslationY(top);
