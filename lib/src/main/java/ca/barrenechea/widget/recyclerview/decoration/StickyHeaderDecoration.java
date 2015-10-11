@@ -18,6 +18,7 @@ package ca.barrenechea.widget.recyclerview.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,23 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         mHeaderCache.clear();
     }
 
+    public View findHeaderViewUnder(float x, float y) {
+        for (RecyclerView.ViewHolder holder : mHeaderCache.values()) {
+            final View child = holder.itemView;
+            final float translationX = ViewCompat.getTranslationX(child);
+            final float translationY = ViewCompat.getTranslationY(child);
+
+            if (x >= child.getLeft() + translationX &&
+                    x <= child.getRight() + translationX &&
+                    y >= child.getTop() + translationY &&
+                    y <= child.getBottom() + translationY) {
+                return child;
+            }
+        }
+
+        return null;
+    }
+
     private boolean hasHeader(int position) {
         if (position == 0) {
             return true;
@@ -134,6 +152,8 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
                 final int left = child.getLeft();
                 final int top = getHeaderTop(parent, child, header, adapterPos, layoutPos);
                 c.translate(left, top);
+                header.setTranslationX(left);
+                header.setTranslationY(top);
                 header.draw(c);
                 c.restore();
             }
