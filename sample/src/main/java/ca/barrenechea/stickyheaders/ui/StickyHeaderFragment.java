@@ -57,7 +57,9 @@ public class StickyHeaderFragment extends BaseDecorationFragment implements Recy
         // really bad click detection just for demonstration purposes
         // it will not allow the list to scroll if the swipe motion starts
         // on top of a header
-        return rv.findChildViewUnder(e.getX(), e.getY()) == null;
+        View v = rv.findChildViewUnder(e.getX(), e.getY());
+        return v == null;
+//        return rv.findChildViewUnder(e.getX(), e.getY()) != null;
     }
 
     @Override
