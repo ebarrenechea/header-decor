@@ -18,12 +18,16 @@ package ca.barrenechea.stickyheaders.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.stickyheaders.widget.DoubleHeaderTestAdapter;
 import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderDecoration;
 
-public class DoubleHeaderFragment extends BaseDecorationFragment {
+public class DoubleHeaderFragment extends BaseDecorationFragment implements RecyclerView.OnItemTouchListener {
 
     private DoubleHeaderDecoration decor;
 
@@ -35,6 +39,7 @@ public class DoubleHeaderFragment extends BaseDecorationFragment {
 
         list.setAdapter(adapter);
         list.addItemDecoration(decor, 1);
+        list.addOnItemTouchListener(this);
     }
 
     @Override
@@ -47,4 +52,36 @@ public class DoubleHeaderFragment extends BaseDecorationFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+        // really bad click detection just for demonstration purposes
+        // it will not allow the list to scroll if the swipe motion starts
+        // on top of a header
+        return rv.findChildViewUnder(e.getX(), e.getY()) == null;
+    }
+
+    @Override
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        // only use the "UP" motion event, discard all others
+        if (e.getAction() != MotionEvent.ACTION_UP) {
+            return;
+        }
+
+        // find the header that was clicked
+        View view = decor.findHeaderViewUnder(e.getX(), e.getY());
+
+        if (view == null) {
+            // or the subheader, if the header is null
+            view = decor.findSubHeaderViewUnder(e.getX(), e.getY());
+        }
+
+        if (view instanceof TextView) {
+            Toast.makeText(this.getActivity(), ((TextView) view).getText() + " clicked", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+        // do nothing
+    }
 }

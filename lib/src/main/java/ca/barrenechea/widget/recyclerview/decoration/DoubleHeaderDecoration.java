@@ -18,6 +18,7 @@ package ca.barrenechea.widget.recyclerview.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,40 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
 
             return holder;
         }
+    }
+
+    public View findHeaderViewUnder(float x, float y) {
+        for (RecyclerView.ViewHolder holder : mHeaderCache.values()) {
+            final View child = holder.itemView;
+            final float translationX = ViewCompat.getTranslationX(child);
+            final float translationY = ViewCompat.getTranslationY(child);
+
+            if (x >= child.getLeft() + translationX &&
+                    x <= child.getRight() + translationX &&
+                    y >= child.getTop() + translationY &&
+                    y <= child.getBottom() + translationY) {
+                return child;
+            }
+        }
+
+        return null;
+    }
+
+    public View findSubHeaderViewUnder(float x, float y) {
+        for (RecyclerView.ViewHolder holder : mSubHeaderCache.values()) {
+            final View child = holder.itemView;
+            final float translationX = ViewCompat.getTranslationX(child);
+            final float translationY = ViewCompat.getTranslationY(child);
+
+            if (x >= child.getLeft() + translationX &&
+                    x <= child.getRight() + translationX &&
+                    y >= child.getTop() + translationY &&
+                    y <= child.getBottom() + translationY) {
+                return child;
+            }
+        }
+
+        return null;
     }
 
     private RecyclerView.ViewHolder getHeader(RecyclerView parent, int position) {
@@ -178,14 +213,18 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
                 left = child.getLeft();
                 top = getSubHeaderTop(parent, child, header, subHeader, adapterPos, layoutPos);
                 c.translate(left, top);
+                subHeader.setTranslationX(left);
+                subHeader.setTranslationY(top);
                 subHeader.draw(c);
                 c.restore();
 
                 if (!headerDrawn || hasHeader(adapterPos)) {
                     c.save();
                     left = child.getLeft();
-                    top = getHeaderTop(parent, child, subHeader, header, adapterPos, layoutPos);
+                    top = getHeaderTop(parent, child, header, subHeader, adapterPos, layoutPos);
                     c.translate(left, top);
+                    header.setTranslationX(left);
+                    header.setTranslationY(top);
                     header.draw(c);
                     c.restore();
                 }
