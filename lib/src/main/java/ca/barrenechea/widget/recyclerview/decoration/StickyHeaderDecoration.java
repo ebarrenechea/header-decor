@@ -61,18 +61,14 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view);
-
         int headerHeight = 0;
         if (position != RecyclerView.NO_POSITION && hasHeader(position)) {
             final long positionHeaderId = mAdapter.getHeaderId(position);
-            final int count = parent.getChildCount();
             boolean isFirstInGroup = false;
-            for (int layoutPos = 0; layoutPos < count; layoutPos++) {
-                final View child = parent.getChildAt(layoutPos);
-                final int adapterPos = parent.getChildAdapterPosition(child);
-                final long posHeaderId = mAdapter.getHeaderId(adapterPos);
-                if (posHeaderId == positionHeaderId) {
-                    if (adapterPos == position) {
+            for (int pos = position; pos >= 0; pos--) {
+                long posHeaderId = mAdapter.getHeaderId(pos);
+                if (posHeaderId != positionHeaderId) {
+                    if (pos + 1 == position) {
                         isFirstInGroup = true;
                     }
                     break;
@@ -83,7 +79,6 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
                 headerHeight = getHeaderHeightForLayout(header);
             }
         }
-
         outRect.set(0, headerHeight, 0, 0);
     }
 
