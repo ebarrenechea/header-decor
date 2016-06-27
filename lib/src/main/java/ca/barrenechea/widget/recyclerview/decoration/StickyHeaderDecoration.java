@@ -31,18 +31,25 @@ import java.util.Map;
  */
 public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
 
+    public interface DrawOrder{
+        int OVER_ITEMS = 0;
+        int UNDER_ITEMS = 1;
+    }
+
     private Map<Long, RecyclerView.ViewHolder> mHeaderCache;
 
     private StickyHeaderAdapter mAdapter;
 
     private boolean mRenderInline;
 
+    private int mDrawOrder = DrawOrder.OVER_ITEMS;
+
     /**
      * @param adapter
      *         the sticky header adapter to use
      */
     public StickyHeaderDecoration(StickyHeaderAdapter adapter) {
-        this(adapter, false);
+        this(adapter, false, DrawOrder.OVER_ITEMS);
     }
 
     /**
@@ -50,9 +57,27 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
      *         the sticky header adapter to use
      */
     public StickyHeaderDecoration(StickyHeaderAdapter adapter, boolean renderInline) {
+        this(adapter, renderInline, DrawOrder.OVER_ITEMS);
+    }
+
+
+    /**
+     * @param adapter
+     *         the sticky header adapter to use
+     */
+    public StickyHeaderDecoration(StickyHeaderAdapter adapter, int drawOrder) {
+        this(adapter, false, drawOrder);
+    }
+
+    /**
+     * @param adapter
+     *         the sticky header adapter to use
+     */
+    public StickyHeaderDecoration(StickyHeaderAdapter adapter, boolean renderInline, int drawOrder) {
         mAdapter = adapter;
         mHeaderCache = new HashMap<>();
         mRenderInline = renderInline;
+        mDrawOrder = drawOrder;
     }
 
     /**
@@ -134,11 +159,22 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
+    @Override
+    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        if (mDrawOrder == DrawOrder.UNDER_ITEMS) {
+            doDraw(c, parent, state);
+        }
+    }
+
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+        if (mDrawOrder == DrawOrder.OVER_ITEMS) {
+            doDraw(c, parent, state);
+        }
+    }
+
+    private void doDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         final int count = parent.getChildCount();
 
         for (int layoutPos = 0; layoutPos < count; layoutPos++) {
