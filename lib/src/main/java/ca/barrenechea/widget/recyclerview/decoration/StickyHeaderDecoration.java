@@ -30,6 +30,7 @@ import java.util.Map;
  * A sticky header decoration for android's RecyclerView.
  */
 public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
+    public static final long NO_HEADER_ID = -1L;
 
     private Map<Long, RecyclerView.ViewHolder> mHeaderCache;
 
@@ -61,14 +62,34 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view);
-
         int headerHeight = 0;
-        if (position != RecyclerView.NO_POSITION && hasHeader(position)) {
+
+        if (position != RecyclerView.NO_POSITION
+                && hasHeader(position)
+                && showHeaderAboveItem(position)) {
+
             View header = getHeader(parent, position).itemView;
             headerHeight = getHeaderHeightForLayout(header);
         }
 
         outRect.set(0, headerHeight, 0, 0);
+    }
+
+    private boolean showHeaderAboveItem(int itemAdapterPosition) {
+        if (itemAdapterPosition == 0) {
+            return true;
+        }
+
+        for (int pos = itemAdapterPosition; pos >= 0; pos--) {
+            long posHeaderId = mAdapter.getHeaderId(pos);
+
+            if (posHeaderId != mAdapter.getHeaderId(itemAdapterPosition)) {
+                if (pos + 1 == itemAdapterPosition) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -97,12 +118,7 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
     }
 
     private boolean hasHeader(int position) {
-        if (position == 0) {
-            return true;
-        }
-
-        int previous = position - 1;
-        return mAdapter.getHeaderId(position) != mAdapter.getHeaderId(previous);
+        return mAdapter.getHeaderId(position) != NO_HEADER_ID;
     }
 
     private RecyclerView.ViewHolder getHeader(RecyclerView parent, int position) {
@@ -138,24 +154,31 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
      * {@inheritDoc}
      */
     @Override
-    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDrawOver(Canvas canvas, RecyclerView parent, RecyclerView.State state) {
         final int count = parent.getChildCount();
+        long previousHeaderId = -1;
 
         for (int layoutPos = 0; layoutPos < count; layoutPos++) {
             final View child = parent.getChildAt(layoutPos);
-
             final int adapterPos = parent.getChildAdapterPosition(child);
 
-            if (adapterPos != RecyclerView.NO_POSITION && (layoutPos == 0 || hasHeader(adapterPos))) {
-                View header = getHeader(parent, adapterPos).itemView;
-                c.save();
-                final int left = child.getLeft();
-                final int top = getHeaderTop(parent, child, header, adapterPos, layoutPos);
-                c.translate(left, top);
-                header.setTranslationX(left);
-                header.setTranslationY(top);
-                header.draw(c);
-                c.restore();
+            if (adapterPos != RecyclerView.NO_POSITION && hasHeader(adapterPos)) {
+                long headerId = mAdapter.getHeaderId(adapterPos);
+
+                if (headerId != previousHeaderId) {
+                    previousHeaderId = headerId;
+                    View header = getHeader(parent, adapterPos).itemView;
+                    canvas.save();
+
+                    final int left = child.getLeft();
+                    final int top = getHeaderTop(parent, child, header, adapterPos, layoutPos);
+                    canvas.translate(left, top);
+
+                    header.setTranslationX(left);
+                    header.setTranslationY(top);
+                    header.draw(canvas);
+                    canvas.restore();
+                }
             }
         }
     }

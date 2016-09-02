@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 
 public class StickyTestAdapter extends RecyclerView.Adapter<StickyTestAdapter.ViewHolder> implements
         StickyHeaderAdapter<StickyTestAdapter.HeaderHolder> {
@@ -54,6 +55,9 @@ public class StickyTestAdapter extends RecyclerView.Adapter<StickyTestAdapter.Vi
 
     @Override
     public long getHeaderId(int position) {
+        if (position == 0) { // don't show header for first item
+            return StickyHeaderDecoration.NO_HEADER_ID;
+        }
         return (long) position / 7;
     }
 
