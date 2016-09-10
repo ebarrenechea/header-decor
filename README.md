@@ -14,7 +14,7 @@ This library is available in `aar` format.
 If you are using gradle:
 ```groovy
 dependencies {
-    compile 'ca.barrenechea.header-decor:header-decor:0.2.6'
+    compile 'ca.barrenechea.header-decor:header-decor:0.2.7'
 }
 ```
 
@@ -23,7 +23,7 @@ If you are using maven:
 <dependency>
     <groupId>ca.barrenechea.header-decor</groupId>
     <artifactId>header-decor</artifactId>
-    <version>0.2.6</version>
+    <version>0.2.7</version>
 </dependency>
 ```
 
