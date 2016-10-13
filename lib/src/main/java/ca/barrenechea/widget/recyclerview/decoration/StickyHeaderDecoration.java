@@ -79,17 +79,7 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         if (itemAdapterPosition == 0) {
             return true;
         }
-
-        for (int pos = itemAdapterPosition; pos >= 0; pos--) {
-            long posHeaderId = mAdapter.getHeaderId(pos);
-
-            if (posHeaderId != mAdapter.getHeaderId(itemAdapterPosition)) {
-                if (pos + 1 == itemAdapterPosition) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return mAdapter.getHeaderId(itemAdapterPosition - 1) != mAdapter.getHeaderId(itemAdapterPosition);
     }
 
     /**
