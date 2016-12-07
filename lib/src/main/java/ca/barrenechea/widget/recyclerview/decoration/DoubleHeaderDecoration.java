@@ -49,6 +49,13 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
     /**
      * @param adapter the double header adapter to use
      */
+    public DoubleHeaderDecoration(DoubleHeaderAdapter adapter, boolean renderHeaderInline) {
+        this(adapter, renderHeaderInline, false);
+    }
+
+    /**
+     * @param adapter the double header adapter to use
+     */
     public DoubleHeaderDecoration(DoubleHeaderAdapter adapter, boolean renderHeaderInline, boolean renderSubHeaderInline) {
         mAdapter = adapter;
 
@@ -370,7 +377,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
 
     private int getHeaderHeightForLayout(View header) {
         if (header != null) {
-            return mRenderSubHeaderInline ? 0 : header.getMeasuredHeight();
+            return mRenderHeaderInline ? 0 : header.getMeasuredHeight();
         }
         return 0;
     }
