@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import ca.barrenechea.stickyheaders.ui.DoubleHeaderFragment;
 import ca.barrenechea.stickyheaders.ui.DoubleHeaderWithoutSubHeaderFragment;
 import ca.barrenechea.stickyheaders.ui.InlineDoubleHeaderFragment;
+import ca.barrenechea.stickyheaders.ui.InlineDoubleSubHeaderFragment;
 import ca.barrenechea.stickyheaders.ui.InlineStickyHeaderFragment;
 import ca.barrenechea.stickyheaders.ui.StickyHeaderFragment;
 
@@ -85,8 +86,10 @@ public class MainActivity extends FragmentActivity {
                 case 3:
                     return new DoubleHeaderWithoutSubHeaderFragment();
                 case 4:
-                    return new InlineDoubleHeaderFragment();
+                    return new InlineDoubleSubHeaderFragment();
 
+                case 5:
+                    return new InlineDoubleHeaderFragment();
                 default:
                     return null;
             }
@@ -94,7 +97,7 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public int getCount() {
-            return 5;
+            return 6;
         }
 
         @Override
@@ -112,8 +115,9 @@ public class MainActivity extends FragmentActivity {
                 case 3:
                     return "Double Header - Without sub header";
                 case 4:
+                    return "Double Header - sub headerInline";
+                case 5:
                     return "Double Header - Inline";
-
                 default:
                     return null;
             }

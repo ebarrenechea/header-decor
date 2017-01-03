@@ -26,12 +26,12 @@ import android.widget.TextView;
 import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderAdapter;
 
-public class InlineDoubleHeaderTestAdapter extends RecyclerView.Adapter<InlineDoubleHeaderTestAdapter.ViewHolder> implements
-        DoubleHeaderAdapter<InlineDoubleHeaderTestAdapter.HeaderHolder, InlineDoubleHeaderTestAdapter.SubHeaderHolder> {
+public class InlineDoubleSubHeaderTestAdapter extends RecyclerView.Adapter<InlineDoubleSubHeaderTestAdapter.ViewHolder> implements
+        DoubleHeaderAdapter<InlineDoubleSubHeaderTestAdapter.HeaderHolder, InlineDoubleSubHeaderTestAdapter.SubHeaderHolder> {
 
     private LayoutInflater mInflater;
 
-    public InlineDoubleHeaderTestAdapter(Context context) {
+    public InlineDoubleSubHeaderTestAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 
@@ -64,7 +64,7 @@ public class InlineDoubleHeaderTestAdapter extends RecyclerView.Adapter<InlineDo
 
     @Override
     public HeaderHolder onCreateHeaderHolder(ViewGroup parent) {
-        final View view = mInflater.inflate(R.layout.header_inline_test, parent, false);
+        final View view = mInflater.inflate(R.layout.super_header_test, parent, false);
         return new HeaderHolder(view);
     }
 
@@ -76,7 +76,7 @@ public class InlineDoubleHeaderTestAdapter extends RecyclerView.Adapter<InlineDo
 
     @Override
     public void onBindHeaderHolder(HeaderHolder viewholder, int position) {
-        viewholder.timeline.setText("H " + getHeaderId(position));
+        viewholder.timeline.setText("Header " + getHeaderId(position));
     }
 
     @Override
