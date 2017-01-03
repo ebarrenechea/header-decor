@@ -20,7 +20,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="64dp"
     android:layout_height="72dp"
-    android:background="#55AA33"
+    android:background="#775599"
     android:gravity="center"
     android:textAppearance="?android:attr/textAppearanceMedium"
     android:textColor="#FFF"

@@ -25,19 +25,20 @@ import android.widget.TextView;
 
 import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderAdapter;
+import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderDecoration;
 
-public class InlineDoubleHeaderTestAdapter extends RecyclerView.Adapter<InlineDoubleHeaderTestAdapter.ViewHolder> implements
-        DoubleHeaderAdapter<InlineDoubleHeaderTestAdapter.HeaderHolder, InlineDoubleHeaderTestAdapter.SubHeaderHolder> {
+public class DoubleHeaderWithoutSubHeaderTestAdapter extends RecyclerView.Adapter<DoubleHeaderWithoutSubHeaderTestAdapter.ViewHolder> implements
+        DoubleHeaderAdapter<DoubleHeaderWithoutSubHeaderTestAdapter.HeaderHolder, DoubleHeaderWithoutSubHeaderTestAdapter.SubHeaderHolder> {
 
     private LayoutInflater mInflater;
 
-    public InlineDoubleHeaderTestAdapter(Context context) {
+    public DoubleHeaderWithoutSubHeaderTestAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        final View view = mInflater.inflate(R.layout.item_inline_test, viewGroup, false);
+        final View view = mInflater.inflate(R.layout.item_test, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -54,34 +55,38 @@ public class InlineDoubleHeaderTestAdapter extends RecyclerView.Adapter<InlineDo
 
     @Override
     public long getHeaderId(int position) {
-        return position / 14;
+        return position / 4;
     }
 
     @Override
     public long getSubHeaderId(int position) {
-        return position / 7;
+        long id = position / 2;
+        if (id % 4 == 0 || id % 4 == 1) {
+            return DoubleHeaderDecoration.NO_SUB_HEADER_ID;
+        }
+        return id;
     }
 
     @Override
     public HeaderHolder onCreateHeaderHolder(ViewGroup parent) {
-        final View view = mInflater.inflate(R.layout.header_inline_test, parent, false);
+        final View view = mInflater.inflate(R.layout.super_header_test, parent, false);
         return new HeaderHolder(view);
     }
 
     @Override
     public SubHeaderHolder onCreateSubHeaderHolder(ViewGroup parent) {
-        final View view = mInflater.inflate(R.layout.subheader_inline_test, parent, false);
+        final View view = mInflater.inflate(R.layout.header_test, parent, false);
         return new SubHeaderHolder(view);
     }
 
     @Override
     public void onBindHeaderHolder(HeaderHolder viewholder, int position) {
-        viewholder.timeline.setText("H " + getHeaderId(position));
+        viewholder.timeline.setText("Header " + getHeaderId(position));
     }
 
     @Override
     public void onBindSubHeaderHolder(SubHeaderHolder viewholder, int position) {
-        viewholder.date.setText(getSubHeaderId(position) + "");
+        viewholder.date.setText("Sub-header " + getSubHeaderId(position));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

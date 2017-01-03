@@ -24,18 +24,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.barrenechea.stickyheaders.R;
-import ca.barrenechea.stickyheaders.widget.InlineDoubleHeaderTestAdapter;
-import ca.barrenechea.stickyheaders.widget.InlineDoubleSubHeaderTestAdapter;
+import ca.barrenechea.stickyheaders.widget.DoubleHeaderTestAdapter;
+import ca.barrenechea.stickyheaders.widget.DoubleHeaderWithoutSubHeaderTestAdapter;
 import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderDecoration;
 
-public class InlineDoubleHeaderFragment extends BaseDecorationFragment implements RecyclerView.OnItemTouchListener {
+public class DoubleHeaderWithoutSubHeaderFragment extends BaseDecorationFragment implements RecyclerView.OnItemTouchListener {
 
     private DoubleHeaderDecoration decor;
 
     @Override
     protected void setAdapterAndDecor(RecyclerView list) {
-        final InlineDoubleHeaderTestAdapter adapter = new InlineDoubleHeaderTestAdapter(this.getActivity());
-        decor = new DoubleHeaderDecoration(adapter, true, true);
+        final DoubleHeaderWithoutSubHeaderTestAdapter adapter = new DoubleHeaderWithoutSubHeaderTestAdapter(this.getActivity());
+        decor = new DoubleHeaderDecoration(adapter);
         setHasOptionsMenu(true);
 
         list.setAdapter(adapter);
