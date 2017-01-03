@@ -49,8 +49,8 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
     /**
      * @param adapter the double header adapter to use
      */
-    public DoubleHeaderDecoration(DoubleHeaderAdapter adapter, boolean renderHeaderInline) {
-        this(adapter, renderHeaderInline, false);
+    public DoubleHeaderDecoration(DoubleHeaderAdapter adapter, boolean renderSubHeaderInline) {
+        this(adapter, false, renderSubHeaderInline);
     }
 
     /**
@@ -210,11 +210,11 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         if (position != RecyclerView.NO_POSITION) {
             if (hasHeader(position)) {
                 View header = getHeader(parent, position).itemView;
-                headerHeight += getHeaderHeightForLayout(header);
+                headerHeight += mRenderHeaderInline ? 0 : getHeaderHeightForLayout(header);
             }
             if (hasSubHeader(position)) {
                 View header = getSubHeader(parent, position).itemView;
-                headerHeight += getSubHeaderHeightForLayout(header);
+                headerHeight += mRenderSubHeaderInline ? 0 : getSubHeaderHeightForLayout(header);
             }
         }
 
@@ -377,14 +377,14 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
 
     private int getHeaderHeightForLayout(View header) {
         if (header != null) {
-            return mRenderHeaderInline ? 0 : header.getMeasuredHeight();
+            return header.getMeasuredHeight();
         }
         return 0;
     }
 
     private int getSubHeaderHeightForLayout(View header) {
         if (header != null) {
-            return mRenderSubHeaderInline ? 0 : header.getMeasuredHeight();
+            return mRenderSubHeaderInline? 0 : header.getMeasuredHeight();
         }
         return 0;
     }
