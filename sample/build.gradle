@@ -17,13 +17,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
 
     defaultConfig {
         applicationId "ca.barrenechea.stickyheaders"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 26
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
     }
@@ -41,6 +41,6 @@ android {
 
 dependencies {
     compile project(':lib')
-    compile 'com.android.support:support-v4:24.2.0'
-    compile 'com.android.support:recyclerview-v7:24.2.0'
+    compile "com.android.support:support-v4:$supportLibVersion"
+    compile "com.android.support:recyclerview-v7:$supportLibVersion"
 }
