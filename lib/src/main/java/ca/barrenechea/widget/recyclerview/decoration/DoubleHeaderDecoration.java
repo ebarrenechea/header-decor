@@ -30,10 +30,10 @@ import java.util.Map;
  * A double sticky header decoration for android's RecyclerView.
  */
 public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
-    private DoubleHeaderAdapter mAdapter;
-    private Map<Long, RecyclerView.ViewHolder> mSubHeaderCache;
-    private Map<Long, RecyclerView.ViewHolder> mHeaderCache;
-    private boolean mRenderInline;
+    private DoubleHeaderAdapter adapter;
+    private Map<Long, RecyclerView.ViewHolder> subHeaderCache;
+    private Map<Long, RecyclerView.ViewHolder> headerCache;
+    private boolean renderInline;
 
     /**
      * @param adapter the double header adapter to use
@@ -46,11 +46,11 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
      * @param adapter the double header adapter to use
      */
     public DoubleHeaderDecoration(DoubleHeaderAdapter adapter, boolean renderInline) {
-        mAdapter = adapter;
+        this.adapter = adapter;
 
-        mSubHeaderCache = new HashMap<>();
-        mHeaderCache = new HashMap<>();
-        mRenderInline = renderInline;
+        this.subHeaderCache = new HashMap<>();
+        this.headerCache = new HashMap<>();
+        this.renderInline = renderInline;
     }
 
     /**
@@ -67,7 +67,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
      * rebound on list scroll after this method has been called.
      */
     public void clearSubHeaderCache() {
-        mSubHeaderCache.clear();
+        subHeaderCache.clear();
     }
 
     /**
@@ -75,29 +75,29 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
      * rebound on list scroll after this method has been called.
      */
     public void clearHeaderCache() {
-        mHeaderCache.clear();
+        headerCache.clear();
     }
 
     private RecyclerView.ViewHolder getSubHeader(RecyclerView parent, int position) {
-        final long key = mAdapter.getSubHeaderId(position);
+        final long key = adapter.getSubHeaderId(position);
 
-        if (mSubHeaderCache.containsKey(key)) {
-            return mSubHeaderCache.get(key);
+        if (subHeaderCache.containsKey(key)) {
+            return subHeaderCache.get(key);
         } else {
-            final RecyclerView.ViewHolder holder = mAdapter.onCreateSubHeaderHolder(parent);
+            final RecyclerView.ViewHolder holder = adapter.onCreateSubHeaderHolder(parent);
             final View header = holder.itemView;
 
             //noinspection unchecked
-            mAdapter.onBindSubHeaderHolder(holder, position);
+            adapter.onBindSubHeaderHolder(holder, position);
             measureView(parent, header);
-            mSubHeaderCache.put(key, holder);
+            subHeaderCache.put(key, holder);
 
             return holder;
         }
     }
 
     public View findHeaderViewUnder(float x, float y) {
-        for (RecyclerView.ViewHolder holder : mHeaderCache.values()) {
+        for (RecyclerView.ViewHolder holder : headerCache.values()) {
             final View child = holder.itemView;
             final float translationX = ViewCompat.getTranslationX(child);
             final float translationY = ViewCompat.getTranslationY(child);
@@ -114,7 +114,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
     }
 
     public View findSubHeaderViewUnder(float x, float y) {
-        for (RecyclerView.ViewHolder holder : mSubHeaderCache.values()) {
+        for (RecyclerView.ViewHolder holder : subHeaderCache.values()) {
             final View child = holder.itemView;
             final float translationX = ViewCompat.getTranslationX(child);
             final float translationY = ViewCompat.getTranslationY(child);
@@ -131,18 +131,18 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
     }
 
     private RecyclerView.ViewHolder getHeader(RecyclerView parent, int position) {
-        final long key = mAdapter.getHeaderId(position);
+        final long key = adapter.getHeaderId(position);
 
-        if (mHeaderCache.containsKey(key)) {
-            return mHeaderCache.get(key);
+        if (headerCache.containsKey(key)) {
+            return headerCache.get(key);
         } else {
-            final RecyclerView.ViewHolder holder = mAdapter.onCreateHeaderHolder(parent);
+            final RecyclerView.ViewHolder holder = adapter.onCreateHeaderHolder(parent);
             final View header = holder.itemView;
 
             //noinspection unchecked
-            mAdapter.onBindHeaderHolder(holder, position);
+            adapter.onBindHeaderHolder(holder, position);
             measureView(parent, header);
-            mHeaderCache.put(key, holder);
+            headerCache.put(key, holder);
 
             return holder;
         }
@@ -167,7 +167,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         }
 
         int previous = position - 1;
-        return mAdapter.getSubHeaderId(position) != mAdapter.getSubHeaderId(previous);
+        return adapter.getSubHeaderId(position) != adapter.getSubHeaderId(previous);
     }
 
     private boolean hasHeader(int position) {
@@ -176,7 +176,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         }
 
         int previous = position - 1;
-        return mAdapter.getHeaderId(position) != mAdapter.getHeaderId(previous);
+        return adapter.getHeaderId(position) != adapter.getHeaderId(previous);
     }
 
     /**
@@ -247,16 +247,16 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         int top = getAnimatedTop(child) - getSubHeaderHeightForLayout(subHeader);
         if (isFirstValidChild(layoutPos, parent)) {
             final int count = parent.getChildCount();
-            final long currentHeaderId = mAdapter.getHeaderId(adapterPos);
-            final long currentSubHeaderId = mAdapter.getSubHeaderId(adapterPos);
+            final long currentHeaderId = adapter.getHeaderId(adapterPos);
+            final long currentSubHeaderId = adapter.getSubHeaderId(adapterPos);
 
             // find next view with sub-header and compute the offscreen push if needed
             for (int i = layoutPos + 1; i < count; i++) {
                 final View next = parent.getChildAt(i);
                 int adapterPosHere = parent.getChildAdapterPosition(next);
                 if (adapterPosHere != RecyclerView.NO_POSITION) {
-                    final long nextHeaderId = mAdapter.getHeaderId(adapterPosHere);
-                    final long nextSubHeaderId = mAdapter.getSubHeaderId(adapterPosHere);
+                    final long nextHeaderId = adapter.getHeaderId(adapterPosHere);
+                    final long nextSubHeaderId = adapter.getSubHeaderId(adapterPosHere);
 
                     if ((nextSubHeaderId != currentSubHeaderId)) {
                         int headersHeight = getSubHeaderHeightForLayout(subHeader) + getSubHeader(parent, adapterPosHere).itemView.getHeight();
@@ -282,14 +282,14 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         int top = getAnimatedTop(child) - header.getHeight() - getSubHeaderHeightForLayout(subHeader);
         if (isFirstValidChild(layoutPos, parent)) {
             final int count = parent.getChildCount();
-            final long currentId = mAdapter.getHeaderId(adapterPos);
+            final long currentId = adapter.getHeaderId(adapterPos);
 
             // find next view with header and compute the offscreen push if needed
             for (int i = layoutPos + 1; i < count; i++) {
                 View next = parent.getChildAt(i);
                 int adapterPosHere = parent.getChildAdapterPosition(next);
                 if (adapterPosHere != RecyclerView.NO_POSITION) {
-                    long nextId = mAdapter.getHeaderId(adapterPosHere);
+                    long nextId = adapter.getHeaderId(adapterPosHere);
                     if (nextId != currentId) {
                         final int headersHeight = header.getHeight() + getHeader(parent, adapterPosHere).itemView.getHeight();
                         final int offset = getAnimatedTop(next) - headersHeight - getSubHeaderHeightForLayout(subHeader);
@@ -325,10 +325,10 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
     }
 
     private int getAnimatedTop(View child) {
-        return child.getTop() + (int)child.getTranslationY();
+        return child.getTop() + (int) child.getTranslationY();
     }
 
     private int getSubHeaderHeightForLayout(View header) {
-        return mRenderInline ? 0 : header.getHeight();
+        return renderInline ? 0 : header.getHeight();
     }
 }

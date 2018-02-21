@@ -27,7 +27,6 @@ import android.view.ViewGroup;
  * @param <S> the sub-header view holder
  */
 public interface DoubleHeaderAdapter<H extends RecyclerView.ViewHolder, S extends RecyclerView.ViewHolder> {
-
     /**
      * Returns the header id for the item at the given position.
      *
@@ -64,7 +63,7 @@ public interface DoubleHeaderAdapter<H extends RecyclerView.ViewHolder, S extend
      * Updates the header view to reflect the header data for the given position
      *
      * @param viewholder the header view holder
-     * @param position   the header's item position
+     * @param position the header's item position
      */
     void onBindHeaderHolder(H viewholder, int position);
 
@@ -72,7 +71,7 @@ public interface DoubleHeaderAdapter<H extends RecyclerView.ViewHolder, S extend
      * Updates the sub-header view to reflect the header data for the given position
      *
      * @param viewholder the sub-header view holder
-     * @param position   the sub-header's item position
+     * @param position the sub-header's item position
      */
     void onBindSubHeaderHolder(S viewholder, int position);
 }
