@@ -1,3 +1,6 @@
+# Maintainers Wanted!
+Would you like to maintain this library? Let me know here: https://github.com/edubarr/header-decor/issues/84
+
 # Header-decor
 A couple of sticky header decorations for android's recycler view.
 
