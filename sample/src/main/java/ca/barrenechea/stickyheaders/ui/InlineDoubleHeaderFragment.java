@@ -24,12 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ca.barrenechea.stickyheaders.R;
-import ca.barrenechea.stickyheaders.widget.DoubleHeaderTestAdapter;
 import ca.barrenechea.stickyheaders.widget.InlineDoubleHeaderTestAdapter;
 import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderDecoration;
 
 public class InlineDoubleHeaderFragment extends BaseDecorationFragment implements RecyclerView.OnItemTouchListener {
-
     private DoubleHeaderDecoration decor;
 
     @Override

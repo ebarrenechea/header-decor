@@ -29,15 +29,14 @@ import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.widget.recyclerview.decoration.DividerDecoration;
 
 public abstract class BaseDecorationFragment extends Fragment {
-
-    private RecyclerView mList;
+    private RecyclerView list;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_recycler, container, false);
 
-        mList = (RecyclerView) view.findViewById(R.id.list);
+        list = (RecyclerView) view.findViewById(R.id.list);
 
         return view;
     }
@@ -52,11 +51,11 @@ public abstract class BaseDecorationFragment extends Fragment {
                 .setColorResource(R.color.default_header_color)
                 .build();
 
-        mList.setHasFixedSize(true);
-        mList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        mList.addItemDecoration(divider);
+        list.setHasFixedSize(true);
+        list.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        list.addItemDecoration(divider);
 
-        setAdapterAndDecor(mList);
+        setAdapterAndDecor(list);
     }
 
     protected abstract void setAdapterAndDecor(RecyclerView list);

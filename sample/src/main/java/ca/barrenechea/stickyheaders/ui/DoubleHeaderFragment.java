@@ -28,7 +28,6 @@ import ca.barrenechea.stickyheaders.widget.DoubleHeaderTestAdapter;
 import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderDecoration;
 
 public class DoubleHeaderFragment extends BaseDecorationFragment implements RecyclerView.OnItemTouchListener {
-
     private DoubleHeaderDecoration decor;
 
     @Override

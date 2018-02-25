@@ -20,12 +20,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 /**
- * The adapter to assist the {@link StickyHeaderDecoration} in creating and binding the header views.
+ * The adapter to assist the {@link StickyHeaderDecoration} in creating and binding the header
+ * views.
  *
  * @param <T> the header view holder
  */
 public interface StickyHeaderAdapter<T extends RecyclerView.ViewHolder> {
-
     /**
      * Returns the header id for the item at the given position.
      *
@@ -44,6 +44,7 @@ public interface StickyHeaderAdapter<T extends RecyclerView.ViewHolder> {
 
     /**
      * Updates the header view to reflect the header data for the given position
+     *
      * @param viewholder the header view holder
      * @param position the header's item position
      */

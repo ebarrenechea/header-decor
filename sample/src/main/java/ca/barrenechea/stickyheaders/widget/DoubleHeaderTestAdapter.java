@@ -29,15 +29,15 @@ import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderAdapter;
 public class DoubleHeaderTestAdapter extends RecyclerView.Adapter<DoubleHeaderTestAdapter.ViewHolder> implements
         DoubleHeaderAdapter<DoubleHeaderTestAdapter.HeaderHolder, DoubleHeaderTestAdapter.SubHeaderHolder> {
 
-    private LayoutInflater mInflater;
+    private LayoutInflater inflater;
 
     public DoubleHeaderTestAdapter(Context context) {
-        mInflater = LayoutInflater.from(context);
+        inflater = LayoutInflater.from(context);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        final View view = mInflater.inflate(R.layout.item_test, viewGroup, false);
+        final View view = inflater.inflate(R.layout.item_test, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -64,13 +64,13 @@ public class DoubleHeaderTestAdapter extends RecyclerView.Adapter<DoubleHeaderTe
 
     @Override
     public HeaderHolder onCreateHeaderHolder(ViewGroup parent) {
-        final View view = mInflater.inflate(R.layout.super_header_test, parent, false);
+        final View view = inflater.inflate(R.layout.super_header_test, parent, false);
         return new HeaderHolder(view);
     }
 
     @Override
     public SubHeaderHolder onCreateSubHeaderHolder(ViewGroup parent) {
-        final View view = mInflater.inflate(R.layout.header_test, parent, false);
+        final View view = inflater.inflate(R.layout.header_test, parent, false);
         return new SubHeaderHolder(view);
     }
 

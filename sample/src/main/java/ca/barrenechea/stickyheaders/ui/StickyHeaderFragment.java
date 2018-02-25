@@ -28,7 +28,6 @@ import ca.barrenechea.stickyheaders.widget.StickyTestAdapter;
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 
 public class StickyHeaderFragment extends BaseDecorationFragment implements RecyclerView.OnItemTouchListener {
-
     private StickyHeaderDecoration decor;
 
     @Override

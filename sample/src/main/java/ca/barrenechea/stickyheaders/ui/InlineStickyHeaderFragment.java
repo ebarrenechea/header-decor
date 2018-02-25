@@ -47,5 +47,4 @@ public class InlineStickyHeaderFragment
 
         return super.onOptionsItemSelected(item);
     }
-
 }

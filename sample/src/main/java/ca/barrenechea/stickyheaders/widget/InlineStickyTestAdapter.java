@@ -30,15 +30,15 @@ public class InlineStickyTestAdapter
         extends RecyclerView.Adapter<InlineStickyTestAdapter.ViewHolder> implements
         StickyHeaderAdapter<InlineStickyTestAdapter.HeaderHolder> {
 
-    private LayoutInflater mInflater;
+    private LayoutInflater inflater;
 
     public InlineStickyTestAdapter(Context context) {
-        mInflater = LayoutInflater.from(context);
+        inflater = LayoutInflater.from(context);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        final View view = mInflater.inflate(R.layout.item_inline_test, viewGroup, false);
+        final View view = inflater.inflate(R.layout.item_inline_test, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -60,7 +60,7 @@ public class InlineStickyTestAdapter
 
     @Override
     public HeaderHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        final View view = mInflater.inflate(R.layout.header_inline_test, parent, false);
+        final View view = inflater.inflate(R.layout.header_inline_test, parent, false);
         return new HeaderHolder(view);
     }
 
@@ -68,7 +68,6 @@ public class InlineStickyTestAdapter
     public void onBindHeaderViewHolder(HeaderHolder viewholder, int position) {
         viewholder.header.setText(getHeaderId(position) + "");
     }
-
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView item;
