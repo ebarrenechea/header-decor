@@ -18,6 +18,8 @@ package ca.barrenechea.widget.recyclerview.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -38,14 +40,14 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
     /**
      * @param adapter the double header adapter to use
      */
-    public DoubleHeaderDecoration(DoubleHeaderAdapter adapter) {
+    public DoubleHeaderDecoration(@NonNull DoubleHeaderAdapter adapter) {
         this(adapter, false);
     }
 
     /**
      * @param adapter the double header adapter to use
      */
-    public DoubleHeaderDecoration(DoubleHeaderAdapter adapter, boolean renderInline) {
+    public DoubleHeaderDecoration(@NonNull DoubleHeaderAdapter adapter, boolean renderInline) {
         this.adapter = adapter;
 
         this.subHeaderCache = new HashMap<>();
@@ -78,7 +80,8 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         headerCache.clear();
     }
 
-    private RecyclerView.ViewHolder getSubHeader(RecyclerView parent, int position) {
+    @NonNull
+    private RecyclerView.ViewHolder getSubHeader(@NonNull RecyclerView parent, int position) {
         final long key = adapter.getSubHeaderId(position);
 
         if (subHeaderCache.containsKey(key)) {
@@ -96,6 +99,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
+    @Nullable
     public View findHeaderViewUnder(float x, float y) {
         for (RecyclerView.ViewHolder holder : headerCache.values()) {
             final View child = holder.itemView;
@@ -113,6 +117,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         return null;
     }
 
+    @Nullable
     public View findSubHeaderViewUnder(float x, float y) {
         for (RecyclerView.ViewHolder holder : subHeaderCache.values()) {
             final View child = holder.itemView;
@@ -130,7 +135,8 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         return null;
     }
 
-    private RecyclerView.ViewHolder getHeader(RecyclerView parent, int position) {
+    @NonNull
+    private RecyclerView.ViewHolder getHeader(@NonNull RecyclerView parent, int position) {
         final long key = adapter.getHeaderId(position);
 
         if (headerCache.containsKey(key)) {
@@ -148,7 +154,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    private void measureView(RecyclerView parent, View header) {
+    private void measureView(@NonNull RecyclerView parent, @NonNull View header) {
         int widthSpec = View.MeasureSpec.makeMeasureSpec(parent.getWidth(), View.MeasureSpec.EXACTLY);
         int heightSpec = View.MeasureSpec.makeMeasureSpec(parent.getHeight(), View.MeasureSpec.UNSPECIFIED);
 
@@ -183,7 +189,9 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
      * {@inheritDoc}
      */
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
+            @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+
         int position = parent.getChildAdapterPosition(view);
 
         int headerHeight = 0;
@@ -205,7 +213,8 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
      * {@inheritDoc}
      */
     @Override
-    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent,
+            @NonNull RecyclerView.State state) {
         final int count = parent.getChildCount();
 
         boolean headerDrawn = false;
@@ -213,29 +222,31 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
             final View child = parent.getChildAt(layoutPos);
             boolean visible = getAnimatedTop(child) > -child.getHeight()/* && child.getTop() < parent.getHeight()*/;
             final int adapterPos = parent.getChildAdapterPosition(child);
-            if (visible && adapterPos != RecyclerView.NO_POSITION && (!headerDrawn || hasSubHeader(adapterPos))) {
+
+            if (visible && adapterPos != RecyclerView.NO_POSITION
+                    && (!headerDrawn || hasSubHeader(adapterPos))) {
                 int left, top;
                 final View header = getHeader(parent, adapterPos).itemView;
                 final View subHeader = getSubHeader(parent, adapterPos).itemView;
 
-                c.save();
+                canvas.save();
                 left = child.getLeft();
                 top = getSubHeaderTop(parent, child, header, subHeader, adapterPos, layoutPos);
-                c.translate(left, top);
+                canvas.translate(left, top);
                 subHeader.setTranslationX(left);
                 subHeader.setTranslationY(top);
-                subHeader.draw(c);
-                c.restore();
+                subHeader.draw(canvas);
+                canvas.restore();
 
                 if (!headerDrawn || hasHeader(adapterPos)) {
-                    c.save();
+                    canvas.save();
                     left = child.getLeft();
                     top = getHeaderTop(parent, child, header, subHeader, adapterPos, layoutPos);
-                    c.translate(left, top);
+                    canvas.translate(left, top);
                     header.setTranslationX(left);
                     header.setTranslationY(top);
-                    header.draw(c);
-                    c.restore();
+                    header.draw(canvas);
+                    canvas.restore();
                 }
 
                 headerDrawn = true;
@@ -243,7 +254,9 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    private int getSubHeaderTop(RecyclerView parent, View child, View header, View subHeader, int adapterPos, int layoutPos) {
+    private int getSubHeaderTop(@NonNull RecyclerView parent, @NonNull View child,
+            @NonNull View header, @NonNull View subHeader, int adapterPos, int layoutPos) {
+
         int top = getAnimatedTop(child) - getSubHeaderHeightForLayout(subHeader);
         if (isFirstValidChild(layoutPos, parent)) {
             final int count = parent.getChildCount();
@@ -259,7 +272,8 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
                     final long nextSubHeaderId = adapter.getSubHeaderId(adapterPosHere);
 
                     if ((nextSubHeaderId != currentSubHeaderId)) {
-                        int headersHeight = getSubHeaderHeightForLayout(subHeader) + getSubHeader(parent, adapterPosHere).itemView.getHeight();
+                        int headersHeight = getSubHeaderHeightForLayout(subHeader) +
+                                getSubHeader(parent, adapterPosHere).itemView.getHeight();
                         if (nextHeaderId != currentHeaderId) {
                             headersHeight += getHeader(parent, adapterPosHere).itemView.getHeight();
                         }
@@ -278,7 +292,9 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         return Math.max(header.getHeight(), top);
     }
 
-    private int getHeaderTop(RecyclerView parent, View child, View header, View subHeader, int adapterPos, int layoutPos) {
+    private int getHeaderTop(@NonNull RecyclerView parent, @NonNull View child,
+            @NonNull View header, @NonNull View subHeader, int adapterPos, int layoutPos) {
+
         int top = getAnimatedTop(child) - header.getHeight() - getSubHeaderHeightForLayout(subHeader);
         if (isFirstValidChild(layoutPos, parent)) {
             final int count = parent.getChildCount();
@@ -291,8 +307,10 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
                 if (adapterPosHere != RecyclerView.NO_POSITION) {
                     long nextId = adapter.getHeaderId(adapterPosHere);
                     if (nextId != currentId) {
-                        final int headersHeight = header.getHeight() + getHeader(parent, adapterPosHere).itemView.getHeight();
-                        final int offset = getAnimatedTop(next) - headersHeight - getSubHeaderHeightForLayout(subHeader);
+                        final int headersHeight = header.getHeight() +
+                                getHeader(parent, adapterPosHere).itemView.getHeight();
+                        final int offset = getAnimatedTop(next) - headersHeight -
+                                getSubHeaderHeightForLayout(subHeader);
 
                         if (offset < 0) {
                             return offset;
@@ -309,7 +327,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         return top;
     }
 
-    private boolean isFirstValidChild(int layoutPos, RecyclerView parent) {
+    private boolean isFirstValidChild(int layoutPos, @NonNull RecyclerView parent) {
         boolean isFirstValidChild = true;
         for (int otherLayoutPos = layoutPos - 1; otherLayoutPos >= 0; --otherLayoutPos) {
             final View otherChild = parent.getChildAt(otherLayoutPos);
@@ -324,11 +342,11 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         return isFirstValidChild;
     }
 
-    private int getAnimatedTop(View child) {
+    private int getAnimatedTop(@NonNull View child) {
         return child.getTop() + (int) child.getTranslationY();
     }
 
-    private int getSubHeaderHeightForLayout(View header) {
+    private int getSubHeaderHeightForLayout(@NonNull View header) {
         return renderInline ? 0 : header.getHeight();
     }
 }

@@ -25,6 +25,7 @@ import android.graphics.Rect;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
@@ -50,7 +51,9 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
      * {@inheritDoc}
      */
     @Override
-    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent,
+            @NonNull RecyclerView.State state) {
+
         int count = parent.getChildCount();
 
         for (int i = 0; i < count; i++) {
@@ -61,9 +64,9 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
             int left = child.getLeft() + leftPadding;
             int right = child.getRight() - rightPadding;
 
-            c.save();
-            c.drawRect(left, top, right, bottom, paint);
-            c.restore();
+            canvas.save();
+            canvas.drawRect(left, top, right, bottom, paint);
+            canvas.restore();
         }
     }
 
@@ -71,7 +74,8 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
      * {@inheritDoc}
      */
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
+            @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         outRect.set(0, 0, 0, height);
     }
 
@@ -86,9 +90,10 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
         private int mRPadding;
         private int mColour;
 
-        public Builder(Context context) {
+        public Builder(@NonNull Context context) {
             mResources = context.getResources();
-            mHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 1f, context.getResources().getDisplayMetrics());
+            mHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 1f,
+                    context.getResources().getDisplayMetrics());
             mLPadding = 0;
             mRPadding = 0;
             mColour = Color.BLACK;
@@ -100,8 +105,10 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
          * @param pixels height in pixels
          * @return the current instance of the Builder
          */
+        @NonNull
         public Builder setHeight(float pixels) {
-            mHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, pixels, mResources.getDisplayMetrics());
+            mHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, pixels,
+                    mResources.getDisplayMetrics());
             return this;
         }
 
@@ -111,6 +118,7 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
          * @param resource height resource id
          * @return the current instance of the Builder
          */
+        @NonNull
         public Builder setHeight(@DimenRes int resource) {
             mHeight = mResources.getDimensionPixelSize(resource);
             return this;
@@ -122,6 +130,7 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
          * @param pixels padding in pixels
          * @return the current instance of the Builder
          */
+        @NonNull
         public Builder setPadding(float pixels) {
             setLeftPadding(pixels);
             setRightPadding(pixels);
@@ -134,6 +143,7 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
          * @param resource padding resource id
          * @return the current instance of the Builder
          */
+        @NonNull
         public Builder setPadding(@DimenRes int resource) {
             setLeftPadding(resource);
             setRightPadding(resource);
@@ -146,8 +156,10 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
          * @param pixelPadding left padding in pixels
          * @return the current instance of the Builder
          */
+        @NonNull
         public Builder setLeftPadding(float pixelPadding) {
-            mLPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, pixelPadding, mResources.getDisplayMetrics());
+            mLPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, pixelPadding,
+                    mResources.getDisplayMetrics());
             return this;
         }
 
@@ -157,8 +169,10 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
          * @param pixelPadding right padding in pixels
          * @return the current instance of the Builder
          */
+        @NonNull
         public Builder setRightPadding(float pixelPadding) {
-            mRPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, pixelPadding, mResources.getDisplayMetrics());
+            mRPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, pixelPadding,
+                    mResources.getDisplayMetrics());
             return this;
         }
 
@@ -168,6 +182,7 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
          * @param resource left padding resource id
          * @return the current instance of the Builder
          */
+        @NonNull
         public Builder setLeftPadding(@DimenRes int resource) {
             mLPadding = mResources.getDimensionPixelSize(resource);
             return this;
@@ -179,6 +194,7 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
          * @param resource right padding resource id
          * @return the current instance of the Builder
          */
+        @NonNull
         public Builder setRightPadding(@DimenRes int resource) {
             mRPadding = mResources.getDimensionPixelSize(resource);
             return this;
@@ -190,6 +206,7 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
          * @param resource the colour resource id
          * @return the current instance of the Builder
          */
+        @NonNull
         public Builder setColorResource(@ColorRes int resource) {
             setColor(mResources.getColor(resource));
             return this;
@@ -201,6 +218,7 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
          * @param color the colour
          * @return the current instance of the Builder
          */
+        @NonNull
         public Builder setColor(@ColorInt int color) {
             mColour = color;
             return this;
@@ -211,6 +229,7 @@ public class DividerDecoration extends RecyclerView.ItemDecoration {
          *
          * @return a properly initialized DividerDecoration instance
          */
+        @NonNull
         public DividerDecoration build() {
             return new DividerDecoration(mHeight, mLPadding, mRPadding, mColour);
         }
