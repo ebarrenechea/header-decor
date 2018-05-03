@@ -17,6 +17,7 @@
 package ca.barrenechea.stickyheaders.widget;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,15 +36,16 @@ public class DoubleHeaderTestAdapter extends RecyclerView.Adapter<DoubleHeaderTe
         inflater = LayoutInflater.from(context);
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         final View view = inflater.inflate(R.layout.item_test, viewGroup, false);
 
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.item.setText("Item " + i);
     }
 
@@ -62,26 +64,28 @@ public class DoubleHeaderTestAdapter extends RecyclerView.Adapter<DoubleHeaderTe
         return position / 7;
     }
 
+    @NonNull
     @Override
-    public HeaderHolder onCreateHeaderHolder(ViewGroup parent) {
+    public HeaderHolder onCreateHeaderHolder(@NonNull ViewGroup parent) {
         final View view = inflater.inflate(R.layout.super_header_test, parent, false);
         return new HeaderHolder(view);
     }
 
+    @NonNull
     @Override
-    public SubHeaderHolder onCreateSubHeaderHolder(ViewGroup parent) {
+    public SubHeaderHolder onCreateSubHeaderHolder(@NonNull ViewGroup parent) {
         final View view = inflater.inflate(R.layout.header_test, parent, false);
         return new SubHeaderHolder(view);
     }
 
     @Override
-    public void onBindHeaderHolder(HeaderHolder viewholder, int position) {
-        viewholder.timeline.setText("Header " + getHeaderId(position));
+    public void onBindHeaderHolder(@NonNull HeaderHolder viewHolder, int position) {
+        viewHolder.timeline.setText("Header " + getHeaderId(position));
     }
 
     @Override
-    public void onBindSubHeaderHolder(SubHeaderHolder viewholder, int position) {
-        viewholder.date.setText("Sub-header " + getSubHeaderId(position));
+    public void onBindSubHeaderHolder(@NonNull SubHeaderHolder viewHolder, int position) {
+        viewHolder.date.setText("Sub-header " + getSubHeaderId(position));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

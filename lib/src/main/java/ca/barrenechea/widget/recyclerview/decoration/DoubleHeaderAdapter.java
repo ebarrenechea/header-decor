@@ -16,6 +16,7 @@
 
 package ca.barrenechea.widget.recyclerview.decoration;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -49,7 +50,8 @@ public interface DoubleHeaderAdapter<H extends RecyclerView.ViewHolder, S extend
      * @param parent the header's view parent
      * @return a view holder for the created header view
      */
-    H onCreateHeaderHolder(ViewGroup parent);
+    @NonNull
+    H onCreateHeaderHolder(@NonNull ViewGroup parent);
 
     /**
      * Creates a new sub-header ViewHolder.
@@ -57,21 +59,22 @@ public interface DoubleHeaderAdapter<H extends RecyclerView.ViewHolder, S extend
      * @param parent the sub-header's view parent
      * @return a view holder for the created sub-header view
      */
-    S onCreateSubHeaderHolder(ViewGroup parent);
+    @NonNull
+    S onCreateSubHeaderHolder(@NonNull ViewGroup parent);
 
     /**
      * Updates the header view to reflect the header data for the given position
      *
-     * @param viewholder the header view holder
+     * @param viewHolder the header view holder
      * @param position the header's item position
      */
-    void onBindHeaderHolder(H viewholder, int position);
+    void onBindHeaderHolder(@NonNull H viewHolder, int position);
 
     /**
      * Updates the sub-header view to reflect the header data for the given position
      *
-     * @param viewholder the sub-header view holder
+     * @param viewHolder the sub-header view holder
      * @param position the sub-header's item position
      */
-    void onBindSubHeaderHolder(S viewholder, int position);
+    void onBindSubHeaderHolder(@NonNull S viewHolder, int position);
 }

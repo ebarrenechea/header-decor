@@ -17,6 +17,7 @@
 package ca.barrenechea.stickyheaders.widget;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,15 +37,16 @@ public class InlineStickyTestAdapter
         inflater = LayoutInflater.from(context);
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         final View view = inflater.inflate(R.layout.item_inline_test, viewGroup, false);
 
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.item.setText("Item " + i);
     }
 
@@ -58,15 +60,16 @@ public class InlineStickyTestAdapter
         return (long) position / 7;
     }
 
+    @NonNull
     @Override
-    public HeaderHolder onCreateHeaderViewHolder(ViewGroup parent) {
+    public HeaderHolder onCreateHeaderViewHolder(@NonNull ViewGroup parent) {
         final View view = inflater.inflate(R.layout.header_inline_test, parent, false);
         return new HeaderHolder(view);
     }
 
     @Override
-    public void onBindHeaderViewHolder(HeaderHolder viewholder, int position) {
-        viewholder.header.setText(getHeaderId(position) + "");
+    public void onBindHeaderViewHolder(@NonNull HeaderHolder viewHolder, int position) {
+        viewHolder.header.setText(getHeaderId(position) + "");
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
