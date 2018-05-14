@@ -10,28 +10,45 @@ A Sample app is available on Google Play:
 
 [![Google Play](https://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=ca.barrenechea.stickyheaders)
 
-Usage
----------------
-This library is available in `aar` format.
+## Usage
+This library is available in `aar` format through [jitpack.io](https://jitpack.io).
 
-If you are using gradle:
+### Gradle
+Add the jitpack.io repository to your repositories list:
+```groovy
+repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+}
+```
+Then add the dependency to your project:
 ```groovy
 dependencies {
-    compile 'ca.barrenechea.header-decor:header-decor:0.2.8'
+    implementation 'com.github.edubarr.header-decor/header-decor:0.2.8'
 }
 ```
 
-If you are using maven:
+### Maven
+Add the jitpack.io repository to your repositories list:
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+
+Then add the dependency to your project:
 ```xml
 <dependency>
-    <groupId>ca.barrenechea.header-decor</groupId>
+    <groupId>com.github.edubarr.header-decor</groupId>
     <artifactId>header-decor</artifactId>
     <version>0.2.8</version>
 </dependency>
 ```
 
-License
--------
+# License
 
     Copyright 2015 Eduardo Barrenechea.
 
