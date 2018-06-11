@@ -1,3 +1,6 @@
+[![](https://jitpack.io/v/edubarr/header-decor.svg)](https://jitpack.io/#edubarr/header-decor)
+
+
 # Maintainers Wanted!
 Would you like to maintain this library? Let me know here: https://github.com/edubarr/header-decor/issues/84
 
