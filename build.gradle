@@ -5,14 +5,14 @@ buildscript {
             'compileSdk'         : 27,
             'minSdk'             : 15,
             'targetSdk'          : 27,
-            'androidGradlePlugin': '3.1.2',
+            'androidGradlePlugin': '3.1.3',
             'supportLibrary'     : '27.1.1',
             'bintrayRelease'     : '0.5.0',
     ]
 
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
 
     dependencies {
@@ -29,7 +29,8 @@ allprojects {
     group = project.GROUP
 
     repositories {
-        jcenter()
         google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
     }
 }
