@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/edubarr/header-decor/tree/master.svg?style=svg)](https://circleci.com/gh/edubarr/header-decor/tree/master)
 [![](https://jitpack.io/v/edubarr/header-decor.svg)](https://jitpack.io/#edubarr/header-decor)
 
 
