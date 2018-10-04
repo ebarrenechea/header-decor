@@ -2,10 +2,10 @@
 
 buildscript {
     ext.versions = [
-            'compileSdk'         : 27,
+            'compileSdk'         : 28,
             'minSdk'             : 15,
-            'targetSdk'          : 27,
-            'androidGradlePlugin': '3.1.3',
+            'targetSdk'          : 28,
+            'androidGradlePlugin': '3.2.0',
             'supportLibrary'     : '27.1.1',
             'bintrayRelease'     : '0.5.0',
     ]
@@ -16,7 +16,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "com.android.tools.build:gradle:${versions.androidGradlePlugin}"
+        classpath "com.android.tools.build:gradle:3.2.0"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
