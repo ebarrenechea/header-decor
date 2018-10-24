@@ -215,12 +215,13 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent,
             @NonNull RecyclerView.State state) {
+
         final int count = parent.getChildCount();
 
         boolean headerDrawn = false;
         for (int layoutPos = 0; layoutPos < count; layoutPos++) {
             final View child = parent.getChildAt(layoutPos);
-            boolean visible = getAnimatedTop(child) > -child.getHeight()/* && child.getTop() < parent.getHeight()*/;
+            boolean visible = getAnimatedTop(child) > -child.getHeight();
             final int adapterPos = parent.getChildAdapterPosition(child);
 
             if (visible && adapterPos != RecyclerView.NO_POSITION

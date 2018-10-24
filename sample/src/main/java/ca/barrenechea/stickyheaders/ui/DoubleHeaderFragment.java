@@ -16,13 +16,14 @@
 
 package ca.barrenechea.stickyheaders.ui;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.stickyheaders.widget.DoubleHeaderTestAdapter;
 import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderDecoration;
@@ -31,18 +32,18 @@ public class DoubleHeaderFragment extends BaseDecorationFragment implements Recy
     private DoubleHeaderDecoration decor;
 
     @Override
-    protected void setAdapterAndDecor(RecyclerView list) {
-        final DoubleHeaderTestAdapter adapter = new DoubleHeaderTestAdapter(this.getActivity());
+    protected void setAdapterAndDecor(@NonNull RecyclerView recyclerView) {
+        final DoubleHeaderTestAdapter adapter = new DoubleHeaderTestAdapter(requireContext());
         decor = new DoubleHeaderDecoration(adapter);
         setHasOptionsMenu(true);
 
-        list.setAdapter(adapter);
-        list.addItemDecoration(decor, 1);
-        list.addOnItemTouchListener(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(decor, 1);
+        recyclerView.addOnItemTouchListener(this);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_clear_cache) {
             decor.clearDoubleHeaderCache();
             return true;
@@ -52,30 +53,32 @@ public class DoubleHeaderFragment extends BaseDecorationFragment implements Recy
     }
 
     @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+    public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView,
+            @NonNull MotionEvent event) {
         // really bad click detection just for demonstration purposes
         // it will not allow the list to scroll if the swipe motion starts
         // on top of a header
-        return rv.findChildViewUnder(e.getX(), e.getY()) == null;
+        return recyclerView.findChildViewUnder(event.getX(), event.getY()) == null;
     }
 
     @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent event) {
         // only use the "UP" motion event, discard all others
-        if (e.getAction() != MotionEvent.ACTION_UP) {
+        if (event.getAction() != MotionEvent.ACTION_UP) {
             return;
         }
 
         // find the header that was clicked
-        View view = decor.findHeaderViewUnder(e.getX(), e.getY());
+        View view = decor.findHeaderViewUnder(event.getX(), event.getY());
 
         if (view == null) {
             // or the subheader, if the header is null
-            view = decor.findSubHeaderViewUnder(e.getX(), e.getY());
+            view = decor.findSubHeaderViewUnder(event.getX(), event.getY());
         }
 
         if (view instanceof TextView) {
-            Toast.makeText(this.getActivity(), ((TextView) view).getText() + " clicked", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), ((TextView) view).getText() + " clicked",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 

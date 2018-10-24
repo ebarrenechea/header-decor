@@ -17,13 +17,13 @@
 package ca.barrenechea.stickyheaders.widget;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
 
@@ -33,7 +33,7 @@ public class InlineStickyTestAdapter
 
     private LayoutInflater inflater;
 
-    public InlineStickyTestAdapter(Context context) {
+    public InlineStickyTestAdapter(@NonNull Context context) {
         inflater = LayoutInflater.from(context);
     }
 

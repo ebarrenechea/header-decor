@@ -19,14 +19,16 @@ package ca.barrenechea.stickyheaders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import ca.barrenechea.stickyheaders.ui.DoubleHeaderFragment;
 import ca.barrenechea.stickyheaders.ui.InlineDoubleHeaderFragment;
 import ca.barrenechea.stickyheaders.ui.InlineStickyHeaderFragment;
@@ -34,7 +36,7 @@ import ca.barrenechea.stickyheaders.ui.StickyHeaderFragment;
 
 public class MainActivity extends FragmentActivity {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -45,13 +47,13 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         this.getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_about) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/edubarr/header-decor"));
             this.startActivity(intent);
@@ -62,11 +64,11 @@ public class MainActivity extends FragmentActivity {
     }
 
     class HeaderPagerAdapter extends FragmentPagerAdapter {
-
-        public HeaderPagerAdapter(FragmentManager fm) {
-            super(fm);
+        public HeaderPagerAdapter(@NonNull FragmentManager fragmentManager) {
+            super(fragmentManager);
         }
 
+        @Nullable
         @Override
         public Fragment getItem(int position) {
             switch (position) {
