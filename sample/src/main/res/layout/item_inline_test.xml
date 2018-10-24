@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2014 Eduardo Barrenechea
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +14,15 @@
   ~ limitations under the License.
   -->
 
-<TextView
-    android:id="@+id/text_item"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/text_item"
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:gravity="center_vertical"
+    android:paddingEnd="16dp"
     android:paddingLeft="72dp"
+    android:paddingRight="16dp"
+    android:paddingStart="72dp"
     android:textAppearance="?android:attr/textAppearanceMedium"
     tools:text="Sample text"/>

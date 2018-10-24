@@ -18,15 +18,15 @@ package ca.barrenechea.widget.recyclerview.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A sticky header decoration for android's RecyclerView.
@@ -94,8 +94,8 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
     public View findHeaderViewUnder(float x, float y) {
         for (RecyclerView.ViewHolder holder : headerCache.values()) {
             final View child = holder.itemView;
-            final float translationX = ViewCompat.getTranslationX(child);
-            final float translationY = ViewCompat.getTranslationY(child);
+            final float translationX = child.getTranslationX();
+            final float translationY = child.getTranslationY();
 
             if (x >= child.getLeft() + translationX &&
                     x <= child.getRight() + translationX &&

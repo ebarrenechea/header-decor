@@ -17,14 +17,15 @@
 package ca.barrenechea.stickyheaders.ui;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.widget.recyclerview.decoration.DividerDecoration;
 
@@ -33,11 +34,11 @@ public abstract class BaseDecorationFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+
         final View view = inflater.inflate(R.layout.fragment_recycler, container, false);
-
-        list = (RecyclerView) view.findViewById(R.id.list);
-
+        list = view.findViewById(R.id.list);
         return view;
     }
 
@@ -45,14 +46,14 @@ public abstract class BaseDecorationFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        final DividerDecoration divider = new DividerDecoration.Builder(this.getActivity())
+        final DividerDecoration divider = new DividerDecoration.Builder(requireActivity())
                 .setHeight(R.dimen.default_divider_height)
                 .setPadding(R.dimen.default_divider_padding)
                 .setColorResource(R.color.default_header_color)
                 .build();
 
         list.setHasFixedSize(true);
-        list.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        list.setLayoutManager(new LinearLayoutManager(requireContext()));
         list.addItemDecoration(divider);
 
         setAdapterAndDecor(list);

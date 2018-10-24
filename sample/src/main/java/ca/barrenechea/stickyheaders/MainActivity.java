@@ -19,14 +19,14 @@ package ca.barrenechea.stickyheaders;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import ca.barrenechea.stickyheaders.ui.DoubleHeaderFragment;
 import ca.barrenechea.stickyheaders.ui.InlineDoubleHeaderFragment;
 import ca.barrenechea.stickyheaders.ui.InlineStickyHeaderFragment;
@@ -39,8 +39,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         HeaderPagerAdapter adapter = new HeaderPagerAdapter(this.getSupportFragmentManager());
-
-        ViewPager pager = (ViewPager) this.findViewById(R.id.pager);
+        ViewPager pager = findViewById(R.id.pager);
         pager.setAdapter(adapter);
     }
 

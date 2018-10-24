@@ -70,7 +70,7 @@ public class InlineDoubleHeaderFragment extends BaseDecorationFragment implement
         View view = decor.findHeaderViewUnder(e.getX(), e.getY());
 
         if (view == null) {
-            // or the subheader, if the header is null
+            // or the sub header, if the header is null
             view = decor.findSubHeaderViewUnder(e.getX(), e.getY());
         }
 

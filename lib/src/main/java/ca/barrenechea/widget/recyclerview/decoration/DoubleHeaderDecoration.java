@@ -18,15 +18,15 @@ package ca.barrenechea.widget.recyclerview.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A double sticky header decoration for android's RecyclerView.
@@ -56,7 +56,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
     }
 
     /**
-     * Clears both the header and subheader view cache. Headers and subheaders will be recreated and
+     * Clears both the header and sub header view cache. Headers and subheaders will be recreated and
      * rebound on list scroll after this method has been called.
      */
     public void clearDoubleHeaderCache() {
@@ -65,7 +65,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
     }
 
     /**
-     * Clears the subheader view cache. Subheaders will be recreated and
+     * Clears the sub header view cache. Sub headers will be recreated and
      * rebound on list scroll after this method has been called.
      */
     public void clearSubHeaderCache() {
@@ -103,8 +103,8 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
     public View findHeaderViewUnder(float x, float y) {
         for (RecyclerView.ViewHolder holder : headerCache.values()) {
             final View child = holder.itemView;
-            final float translationX = ViewCompat.getTranslationX(child);
-            final float translationY = ViewCompat.getTranslationY(child);
+            final float translationX = child.getTranslationX();
+            final float translationY = child.getTranslationY();
 
             if (x >= child.getLeft() + translationX &&
                     x <= child.getRight() + translationX &&
@@ -121,8 +121,8 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
     public View findSubHeaderViewUnder(float x, float y) {
         for (RecyclerView.ViewHolder holder : subHeaderCache.values()) {
             final View child = holder.itemView;
-            final float translationX = ViewCompat.getTranslationX(child);
-            final float translationY = ViewCompat.getTranslationY(child);
+            final float translationX = child.getTranslationX();
+            final float translationY = child.getTranslationY();
 
             if (x >= child.getLeft() + translationX &&
                     x <= child.getRight() + translationX &&
