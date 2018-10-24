@@ -49,7 +49,7 @@ public interface DoubleHeaderAdapter<H extends RecyclerView.ViewHolder, S extend
     /**
      * Updates the sub-header view to reflect the header data for the given position
      *
-     * @param viewHolder the sub-header view holder
+     * @param holder the sub-header view holder
      * @param position the sub-header's item position
      */
     void onBindSubHeaderViewHolder(@NonNull S holder, int position);

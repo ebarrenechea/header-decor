@@ -193,7 +193,7 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
                     if (nextId != currentId) {
                         final View next = parent.getChildAt(i);
                         final int offset = ((int) next.getY()) - (headerHeight +
-                                getHeader(parent, adapterPosHere).itemView.getHeight());
+                                (nextId != NO_HEADER_ID || renderInline ? getHeader(parent, adapterPosHere).itemView.getHeight() : 0));
                         if (offset < 0) {
                             return offset;
                         } else {

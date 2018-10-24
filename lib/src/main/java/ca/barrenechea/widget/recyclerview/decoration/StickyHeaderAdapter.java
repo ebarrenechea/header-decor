@@ -47,7 +47,7 @@ public interface StickyHeaderAdapter<H extends RecyclerView.ViewHolder> {
     /**
      * Updates the header view to reflect the header data for the given position
      *
-     * @param viewHolder the header view holder
+     * @param holder the header view holder
      * @param position the header's item position
      */
     void onBindHeaderViewHolder(@NonNull H holder, int position);

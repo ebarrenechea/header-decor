@@ -31,6 +31,7 @@ import java.util.Map;
  * A double sticky header decoration for android's RecyclerView.
  */
 public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
+    public static final long NO_HEADER_ID = -1L;
 
     private DoubleHeaderAdapter adapter;
     private Map<Long, RecyclerView.ViewHolder> subHeaderCache;
@@ -161,22 +162,26 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
         header.layout(0, 0, header.getMeasuredWidth(), header.getMeasuredHeight());
     }
 
-    private boolean hasSubHeader(int position) {
-        if (position == 0) {
+    private boolean showHeaderAboveItem(int itemAdapterPosition) {
+        if (itemAdapterPosition == 0) {
             return true;
         }
+        return adapter.getHeaderId(itemAdapterPosition - 1) != adapter.getHeaderId(itemAdapterPosition);
+    }
 
-        int previous = position - 1;
-        return adapter.getSubHeaderId(position) != adapter.getSubHeaderId(previous);
+    private boolean showSubHeaderAboveItem(int itemAdapterPosition) {
+        if (itemAdapterPosition == 0) {
+            return true;
+        }
+        return adapter.getSubHeaderId(itemAdapterPosition - 1) != adapter.getSubHeaderId(itemAdapterPosition);
     }
 
     private boolean hasHeader(int position) {
-        if (position == 0) {
-            return true;
-        }
+        return adapter.getHeaderId(position) != NO_HEADER_ID;
+    }
 
-        int previous = position - 1;
-        return adapter.getHeaderId(position) != adapter.getHeaderId(previous);
+    private boolean hasSubHeader(int position) {
+        return adapter.getSubHeaderId(position) != NO_HEADER_ID;
     }
 
     @Override
@@ -186,8 +191,11 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
 
         int headerHeight = 0;
 
-        if (position != RecyclerView.NO_POSITION && hasSubHeader(position)) {
-            if (hasHeader(position)) {
+        if (position != RecyclerView.NO_POSITION
+                && hasSubHeader(position)
+                && showSubHeaderAboveItem(position)) {
+            if (hasHeader(position)
+                    && showHeaderAboveItem(position)) {
                 View header = getHeader(parent, position).itemView;
                 headerHeight += header.getHeight();
             }
@@ -225,15 +233,15 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
 
                 final View header;
                 final View subHeader;
-                if (subHeaderId != previousSubHeaderId && (subSticky || hasSubHeader(adapterPos)) ||
-                        headerId != previousHeaderId && (sticky || hasHeader(adapterPos))) {
+                if (subHeaderId != previousSubHeaderId && hasSubHeader(adapterPos) && (subSticky || showSubHeaderAboveItem(adapterPos)) ||
+                        headerId != previousHeaderId && hasHeader(adapterPos) && (sticky || showHeaderAboveItem(adapterPos))) {
                     header = getHeader(parent, adapterPos).itemView;
                     subHeader = getSubHeader(parent, adapterPos).itemView;
                 } else {
                     continue;
                 }
 
-                if (subHeaderId != previousSubHeaderId && (subSticky || hasSubHeader(adapterPos))) {
+                if (subHeaderId != previousSubHeaderId && hasSubHeader(adapterPos) && (subSticky || showSubHeaderAboveItem(adapterPos))) {
                     previousSubHeaderId = subHeaderId;
 
                     if (subSticky && over || !subSticky && !over) {
@@ -249,7 +257,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
                     }
                 }
 
-                if ((headerId != previousHeaderId || subSticky && top < header.getHeight()) && (sticky || hasHeader(adapterPos))) {
+                if ((headerId != previousHeaderId && hasHeader(adapterPos) || subSticky && top < header.getHeight()) && (sticky || showHeaderAboveItem(adapterPos))) {
                     previousHeaderId = headerId;
 
                     if (sticky && over || !sticky && !over) {
@@ -287,9 +295,9 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
 
                         if ((nextSubHeaderId != currentSubHeaderId)) {
                             int headersHeight = getSubHeaderHeightForLayout(subHeader) +
-                                    getSubHeader(parent, adapterPosHere).itemView.getHeight();
+                                    (nextSubHeaderId != NO_HEADER_ID || renderInline ? getSubHeader(parent, adapterPosHere).itemView.getHeight() : 0);
                             if (nextHeaderId != currentHeaderId) {
-                                headersHeight += getHeader(parent, adapterPosHere).itemView.getHeight();
+                                headersHeight += nextHeaderId != NO_HEADER_ID ? getHeader(parent, adapterPosHere).itemView.getHeight() : 0;
                             }
 
                             final int offset = getAnimatedTop(next) - headersHeight;
@@ -325,7 +333,7 @@ public class DoubleHeaderDecoration extends RecyclerView.ItemDecoration {
                     long nextId = adapter.getHeaderId(adapterPosHere);
                     if (nextId != currentId) {
                         final int headersHeight = header.getHeight() +
-                                getHeader(parent, adapterPosHere).itemView.getHeight();
+                                (nextId != NO_HEADER_ID ? getHeader(parent, adapterPosHere).itemView.getHeight() : 0);
                         final int offset = getAnimatedTop(next) - headersHeight -
                                 getSubHeaderHeightForLayout(subHeader);
 
