@@ -16,6 +16,7 @@
 
 package ca.barrenechea.stickyheaders.ui;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.stickyheaders.widget.StickyTestAdapter;
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderBuilder;
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 
 public class StickyHeaderFragment extends BaseDecorationFragment implements RecyclerView.OnItemTouchListener {
@@ -33,7 +35,7 @@ public class StickyHeaderFragment extends BaseDecorationFragment implements Recy
     @Override
     protected void setAdapterAndDecor(RecyclerView list) {
         final StickyTestAdapter adapter = new StickyTestAdapter(this.getActivity());
-        decor = new StickyHeaderDecoration(adapter);
+        decor = (StickyHeaderDecoration) new StickyHeaderBuilder(adapter).isSticky(true).build();
         setHasOptionsMenu(true);
 
         list.setAdapter(adapter);
@@ -52,7 +54,7 @@ public class StickyHeaderFragment extends BaseDecorationFragment implements Recy
     }
 
     @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+    public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
         // really bad click detection just for demonstration purposes
         // it will not allow the list to scroll if the swipe motion starts
         // on top of a header
@@ -62,7 +64,7 @@ public class StickyHeaderFragment extends BaseDecorationFragment implements Recy
     }
 
     @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
         // only use the "UP" motion event, discard all others
         if (e.getAction() != MotionEvent.ACTION_UP) {
             return;

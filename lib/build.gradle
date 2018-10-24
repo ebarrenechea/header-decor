@@ -15,7 +15,6 @@
  */
 
 apply plugin: 'com.android.library'
-//apply plugin: 'bintray-release'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -39,5 +38,3 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${versions.supportLibrary}"
     implementation "com.android.support:support-annotations:${versions.supportLibrary}"
 }
-
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

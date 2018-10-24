@@ -1,13 +1,10 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     ext.versions = [
-            'compileSdk'         : 27,
+            'compileSdk'         : 28,
             'minSdk'             : 15,
-            'targetSdk'          : 27,
-            'androidGradlePlugin': '3.1.3',
-            'supportLibrary'     : '27.1.1',
-            'bintrayRelease'     : '0.5.0',
+            'targetSdk'          : 28,
+            'androidGradlePlugin': '3.2.1',
+            'supportLibrary'     : '28.0.0',
     ]
 
     repositories {
@@ -17,8 +14,6 @@ buildscript {
 
     dependencies {
         classpath "com.android.tools.build:gradle:${versions.androidGradlePlugin}"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 

@@ -16,6 +16,7 @@
 
 package ca.barrenechea.stickyheaders.ui;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.stickyheaders.widget.DoubleHeaderTestAdapter;
 import ca.barrenechea.widget.recyclerview.decoration.DoubleHeaderDecoration;
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderBuilder;
 
 public class DoubleHeaderFragment extends BaseDecorationFragment implements RecyclerView.OnItemTouchListener {
     private DoubleHeaderDecoration decor;
@@ -33,7 +35,7 @@ public class DoubleHeaderFragment extends BaseDecorationFragment implements Recy
     @Override
     protected void setAdapterAndDecor(RecyclerView list) {
         final DoubleHeaderTestAdapter adapter = new DoubleHeaderTestAdapter(this.getActivity());
-        decor = new DoubleHeaderDecoration(adapter);
+        decor = (DoubleHeaderDecoration) new StickyHeaderBuilder(adapter).isSticky(true).isSubSticky(true).build();
         setHasOptionsMenu(true);
 
         list.setAdapter(adapter);
@@ -52,7 +54,7 @@ public class DoubleHeaderFragment extends BaseDecorationFragment implements Recy
     }
 
     @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+    public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
         // really bad click detection just for demonstration purposes
         // it will not allow the list to scroll if the swipe motion starts
         // on top of a header
@@ -60,7 +62,7 @@ public class DoubleHeaderFragment extends BaseDecorationFragment implements Recy
     }
 
     @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
         // only use the "UP" motion event, discard all others
         if (e.getAction() != MotionEvent.ACTION_UP) {
             return;

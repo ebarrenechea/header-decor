@@ -21,6 +21,7 @@ import android.view.MenuItem;
 
 import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.stickyheaders.widget.InlineStickyTestAdapter;
+import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderBuilder;
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 
 public class InlineStickyHeaderFragment
@@ -31,7 +32,7 @@ public class InlineStickyHeaderFragment
     @Override
     protected void setAdapterAndDecor(RecyclerView list) {
         final InlineStickyTestAdapter adapter = new InlineStickyTestAdapter(this.getActivity());
-        decor = new StickyHeaderDecoration(adapter, true);
+        decor = (StickyHeaderDecoration) new StickyHeaderBuilder(adapter).renderInline(true).isSticky(true).build();
         setHasOptionsMenu(true);
 
         list.setAdapter(adapter);

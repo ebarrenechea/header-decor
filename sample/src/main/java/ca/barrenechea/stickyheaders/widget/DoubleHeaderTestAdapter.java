@@ -66,25 +66,25 @@ public class DoubleHeaderTestAdapter extends RecyclerView.Adapter<DoubleHeaderTe
 
     @NonNull
     @Override
-    public HeaderHolder onCreateHeaderHolder(@NonNull ViewGroup parent) {
+    public HeaderHolder onCreateHeaderViewHolder(@NonNull ViewGroup parent) {
         final View view = inflater.inflate(R.layout.super_header_test, parent, false);
         return new HeaderHolder(view);
     }
 
     @NonNull
     @Override
-    public SubHeaderHolder onCreateSubHeaderHolder(@NonNull ViewGroup parent) {
+    public SubHeaderHolder onCreateSubHeaderViewHolder(@NonNull ViewGroup parent) {
         final View view = inflater.inflate(R.layout.header_test, parent, false);
         return new SubHeaderHolder(view);
     }
 
     @Override
-    public void onBindHeaderHolder(@NonNull HeaderHolder viewHolder, int position) {
+    public void onBindHeaderViewHolder(@NonNull HeaderHolder viewHolder, int position) {
         viewHolder.timeline.setText("Header " + getHeaderId(position));
     }
 
     @Override
-    public void onBindSubHeaderHolder(@NonNull SubHeaderHolder viewHolder, int position) {
+    public void onBindSubHeaderViewHolder(@NonNull SubHeaderHolder viewHolder, int position) {
         viewHolder.date.setText("Sub-header " + getSubHeaderId(position));
     }
 

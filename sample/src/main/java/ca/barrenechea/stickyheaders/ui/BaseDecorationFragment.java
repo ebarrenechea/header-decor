@@ -16,9 +16,13 @@
 
 package ca.barrenechea.stickyheaders.ui;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,33 +30,34 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ca.barrenechea.stickyheaders.R;
-import ca.barrenechea.widget.recyclerview.decoration.DividerDecoration;
 
 public abstract class BaseDecorationFragment extends Fragment {
+
     private RecyclerView list;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_recycler, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_recycler, container, false);
+    }
 
-        list = (RecyclerView) view.findViewById(R.id.list);
-
-        return view;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        list = view.findViewById(R.id.list);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        final DividerDecoration divider = new DividerDecoration.Builder(this.getActivity())
-                .setHeight(R.dimen.default_divider_height)
-                .setPadding(R.dimen.default_divider_padding)
-                .setColorResource(R.color.default_header_color)
-                .build();
+        DividerItemDecoration divider = new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL);
+        Drawable drawable = ContextCompat.getDrawable(requireContext(), R.drawable.divider);
+        if (drawable != null) {
+            divider.setDrawable(drawable);
+        }
 
         list.setHasFixedSize(true);
-        list.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        list.setLayoutManager(new LinearLayoutManager(requireContext()));
         list.addItemDecoration(divider);
 
         setAdapterAndDecor(list);

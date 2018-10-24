@@ -20,7 +20,6 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,30 +36,19 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
     private Map<Long, RecyclerView.ViewHolder> headerCache;
     private StickyHeaderAdapter adapter;
     private boolean renderInline;
+    private boolean sticky;
 
-    /**
-     * @param adapter the sticky header adapter to use
-     */
-    public StickyHeaderDecoration(@NonNull StickyHeaderAdapter adapter) {
-        this(adapter, false);
+    public StickyHeaderDecoration(@NonNull StickyHeaderBuilder builder) {
+        headerCache = new HashMap<>();
+
+        adapter = builder.adapter;
+        renderInline = builder.inline;
+        sticky = builder.sticky;
     }
 
-    /**
-     * @param adapter the sticky header adapter to use
-     */
-    public StickyHeaderDecoration(@NonNull StickyHeaderAdapter adapter, boolean renderInline) {
-        this.adapter = adapter;
-        this.headerCache = new HashMap<>();
-        this.renderInline = renderInline;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void getItemOffsets(@NonNull Rect outRect, @NonNull View view,
-            @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-
+                               @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         int position = parent.getChildAdapterPosition(view);
         int headerHeight = 0;
 
@@ -94,8 +82,8 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
     public View findHeaderViewUnder(float x, float y) {
         for (RecyclerView.ViewHolder holder : headerCache.values()) {
             final View child = holder.itemView;
-            final float translationX = ViewCompat.getTranslationX(child);
-            final float translationY = ViewCompat.getTranslationY(child);
+            final float translationX = child.getTranslationX();
+            final float translationY = child.getTranslationY();
 
             if (x >= child.getLeft() + translationX &&
                     x <= child.getRight() + translationX &&
@@ -146,13 +134,21 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent,
-            @NonNull RecyclerView.State state) {
+    public void onDraw(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+        if (sticky) return;
 
+        draw(canvas, parent);
+    }
+
+    @Override
+    public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+        if (!sticky) return;
+
+        draw(canvas, parent);
+    }
+
+    private void draw(@NonNull Canvas canvas, @NonNull RecyclerView parent) {
         final int count = parent.getChildCount();
         long previousHeaderId = -1;
 
@@ -160,7 +156,7 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
             final View child = parent.getChildAt(layoutPos);
             final int adapterPos = parent.getChildAdapterPosition(child);
 
-            if (adapterPos != RecyclerView.NO_POSITION && hasHeader(adapterPos)) {
+            if (adapterPos != RecyclerView.NO_POSITION && hasHeader(adapterPos) && (sticky || showHeaderAboveItem(adapterPos))) {
                 long headerId = adapter.getHeaderId(adapterPos);
 
                 if (headerId != previousHeaderId) {
@@ -182,11 +178,11 @@ public class StickyHeaderDecoration extends RecyclerView.ItemDecoration {
     }
 
     private int getHeaderTop(@NonNull RecyclerView parent, @NonNull View child,
-            @NonNull View header, int adapterPos, int layoutPos) {
-
+                             @NonNull View header, int adapterPos, int layoutPos) {
         int headerHeight = getHeaderHeightForLayout(header);
         int top = ((int) child.getY()) - headerHeight;
-        if (layoutPos == 0) {
+
+        if (layoutPos == 0 && sticky) {
             final int count = parent.getChildCount();
             final long currentId = adapter.getHeaderId(adapterPos);
             // find next view with header and compute the offscreen push if needed

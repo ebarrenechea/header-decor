@@ -27,14 +27,7 @@ import android.view.ViewGroup;
  * @param <H> the header view holder
  * @param <S> the sub-header view holder
  */
-public interface DoubleHeaderAdapter<H extends RecyclerView.ViewHolder, S extends RecyclerView.ViewHolder> {
-    /**
-     * Returns the header id for the item at the given position.
-     *
-     * @param position the item position
-     * @return the header id
-     */
-    long getHeaderId(int position);
+public interface DoubleHeaderAdapter<H extends RecyclerView.ViewHolder, S extends RecyclerView.ViewHolder> extends StickyHeaderAdapter<H> {
 
     /**
      * Returns the sub-header id for the item at the given position.
@@ -45,30 +38,13 @@ public interface DoubleHeaderAdapter<H extends RecyclerView.ViewHolder, S extend
     long getSubHeaderId(int position);
 
     /**
-     * Creates a new header ViewHolder.
-     *
-     * @param parent the header's view parent
-     * @return a view holder for the created header view
-     */
-    @NonNull
-    H onCreateHeaderHolder(@NonNull ViewGroup parent);
-
-    /**
      * Creates a new sub-header ViewHolder.
      *
      * @param parent the sub-header's view parent
      * @return a view holder for the created sub-header view
      */
     @NonNull
-    S onCreateSubHeaderHolder(@NonNull ViewGroup parent);
-
-    /**
-     * Updates the header view to reflect the header data for the given position
-     *
-     * @param viewHolder the header view holder
-     * @param position the header's item position
-     */
-    void onBindHeaderHolder(@NonNull H viewHolder, int position);
+    S onCreateSubHeaderViewHolder(@NonNull ViewGroup parent);
 
     /**
      * Updates the sub-header view to reflect the header data for the given position
@@ -76,5 +52,5 @@ public interface DoubleHeaderAdapter<H extends RecyclerView.ViewHolder, S extend
      * @param viewHolder the sub-header view holder
      * @param position the sub-header's item position
      */
-    void onBindSubHeaderHolder(@NonNull S viewHolder, int position);
+    void onBindSubHeaderViewHolder(@NonNull S holder, int position);
 }
