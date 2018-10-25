@@ -16,13 +16,14 @@
 
 package ca.barrenechea.stickyheaders.ui;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.stickyheaders.widget.StickyTestAdapter;
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
@@ -31,8 +32,8 @@ public class StickyHeaderFragment extends BaseDecorationFragment implements Recy
     private StickyHeaderDecoration decor;
 
     @Override
-    protected void setAdapterAndDecor(RecyclerView list) {
-        final StickyTestAdapter adapter = new StickyTestAdapter(this.getActivity());
+    protected void setAdapterAndDecor(@NonNull RecyclerView list) {
+        final StickyTestAdapter adapter = new StickyTestAdapter(requireContext());
         decor = new StickyHeaderDecoration(adapter);
         setHasOptionsMenu(true);
 
@@ -52,27 +53,28 @@ public class StickyHeaderFragment extends BaseDecorationFragment implements Recy
     }
 
     @Override
-    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+    public boolean onInterceptTouchEvent(@NonNull RecyclerView recyclerView,
+            @NonNull MotionEvent event) {
         // really bad click detection just for demonstration purposes
         // it will not allow the list to scroll if the swipe motion starts
         // on top of a header
-        View v = rv.findChildViewUnder(e.getX(), e.getY());
+        View v = recyclerView.findChildViewUnder(event.getX(), event.getY());
         return v == null;
-//        return rv.findChildViewUnder(e.getX(), e.getY()) != null;
     }
 
     @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    public void onTouchEvent(@NonNull RecyclerView recyclerView, @NonNull MotionEvent event) {
         // only use the "UP" motion event, discard all others
-        if (e.getAction() != MotionEvent.ACTION_UP) {
+        if (event.getAction() != MotionEvent.ACTION_UP) {
             return;
         }
 
         // find the header that was clicked
-        View view = decor.findHeaderViewUnder(e.getX(), e.getY());
+        View view = decor.findHeaderViewUnder(event.getX(), event.getY());
 
         if (view instanceof TextView) {
-            Toast.makeText(this.getActivity(), ((TextView) view).getText() + " clicked", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), ((TextView) view).getText() + " clicked",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 

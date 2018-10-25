@@ -16,21 +16,20 @@
 
 package ca.barrenechea.stickyheaders.ui;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import ca.barrenechea.stickyheaders.R;
 import ca.barrenechea.stickyheaders.widget.InlineStickyTestAdapter;
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 
-public class InlineStickyHeaderFragment
-        extends BaseDecorationFragment {
-
+public class InlineStickyHeaderFragment extends BaseDecorationFragment {
     private StickyHeaderDecoration decor;
 
     @Override
-    protected void setAdapterAndDecor(RecyclerView list) {
-        final InlineStickyTestAdapter adapter = new InlineStickyTestAdapter(this.getActivity());
+    protected void setAdapterAndDecor(@NonNull RecyclerView list) {
+        final InlineStickyTestAdapter adapter = new InlineStickyTestAdapter(requireContext());
         decor = new StickyHeaderDecoration(adapter, true);
         setHasOptionsMenu(true);
 
@@ -39,7 +38,7 @@ public class InlineStickyHeaderFragment
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_clear_cache) {
             decor.clearHeaderCache();
             return true;
